@@ -1,0 +1,313 @@
+{
+  "nav": {
+    "home": "Acasă",
+    "schedule": "Orar",
+    "trainers": "Instructori",
+    "services": "Servicii",
+    "gallery": "Galerie",
+    "hallRental": "Închiriere sală",
+    "contact": "Contact",
+    "login": "Conectare",
+    "register": "Înregistrare",
+    "dashboard": "Cont personal",
+    "admin": "Panou admin",
+    "trainer": "Cabinet antrenor",
+    "logout": "Deconectare"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Studio de yoga în Chișinău",
+      "title": "Găsește echilibrul. Descoperă-te.",
+      "description": "Yoga aeriană, cursuri de grup și individuale — pentru începători și practicanți avansați. Vino așa cum ești.",
+      "cta": "Înscrie-te la curs",
+      "ctaSecondary": "Vezi orarul"
+    },
+    "services": {
+      "title": "Direcțiile noastre",
+      "subtitle": "Alege ce ți se potrivește",
+      "cta": "Toate serviciile"
+    },
+    "benefits": {
+      "title": "De ce Fly Yoga Studio",
+      "items": {
+        "trainers": {
+          "title": "Instructori cu experiență",
+          "description": "Instructorii noștri sunt specialiști certificați cu ani de practică."
+        },
+        "atmosphere": {
+          "title": "Atmosferă caldă",
+          "description": "Grupuri mici, atenție pentru fiecare elev, mediu prietenos."
+        },
+        "schedule": {
+          "title": "Orar convenabil",
+          "description": "Cursuri dimineața și seara în fiecare zi. Rezervare online în câteva clicuri."
+        }
+      }
+    },
+    "trainers": {
+      "title": "Cunoaște echipa",
+      "subtitle": "Instructori de încredere",
+      "cta": "Toți instructorii"
+    },
+    "reviews": {
+      "title": "Recenziile elevilor",
+      "subtitle": "Experiențe reale ale oamenilor reali",
+      "items": [
+        {
+          "name": "Anna K.",
+          "text": "Fly Yoga mi-a schimbat viața. La început mi-era frică de înălțime, dar acum este activitatea mea preferată!"
+        },
+        {
+          "name": "Mihail D.",
+          "text": "Frecventez de 8 luni. Spatele nu mai doare, postura s-a îmbunătățit. Recomand tuturor."
+        },
+        {
+          "name": "Elena V.",
+          "text": "Atmosfera din studio este foarte caldă și relaxantă. Vii obosit — pleci cu forțe noi."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Începe călătoria ta",
+      "description": "Prima ședință este cel mai bun mod de a cunoaște studioul. Înscrie-te chiar acum.",
+      "button": "Înscrie-te"
+    }
+  },
+  "schedule": {
+    "title": "Orar",
+    "subtitle": "Alege ora potrivită",
+    "book": "Rezervă",
+    "booked": "Ești înscris",
+    "full": "Locuri epuizate",
+    "cancel": "Anulează rezervarea",
+    "seatsLeft": "{{count}} locuri",
+    "seatsLeft_one": "{{count}} loc",
+    "loginToBook": "Conectează-te pentru a rezerva",
+    "empty": "Nu există încă antrenamente programate",
+    "filters": {
+      "all": "Toate",
+      "today": "Azi",
+      "week": "Săptămâna aceasta"
+    }
+  },
+  "trainers": {
+    "title": "Instructori",
+    "subtitle": "Cunoaște echipa"
+  },
+  "services": {
+    "title": "Servicii",
+    "flyYoga": {
+      "name": "Fly Yoga",
+      "description": "Yoga aeriană pe hamace. Dezvoltă flexibilitatea, forța și echilibrul."
+    },
+    "yoga": {
+      "name": "Yoga",
+      "description": "Stiluri clasice și moderne de yoga pentru orice nivel."
+    },
+    "private": {
+      "name": "Cursuri individuale",
+      "description": "Program personalizat adaptat obiectivelor și posibilităților tale."
+    },
+    "rental": {
+      "name": "Închiriere sală",
+      "description": "Sală spațioasă pentru evenimentele tale."
+    }
+  },
+  "hallRental": {
+    "title": "Închiriere sală",
+    "subtitle": "Rezervă sala noastră pentru evenimentul tău",
+    "form": {
+      "name": "Nume",
+      "phone": "Telefon",
+      "email": "Email",
+      "eventDescription": "Descrierea evenimentului",
+      "preferredDate": "Data dorită",
+      "submit": "Trimite cererea",
+      "success": "Cererea a fost trimisă! Vă vom contacta în curând.",
+      "error": "A apărut o eroare. Vă rugăm să încercați din nou."
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Veniți la noi — suntem mereu bucuroși să vă vedem",
+    "address": {
+      "label": "Adresă",
+      "value": "Strada 31 August 1989, 110, Chișinău"
+    },
+    "phone": {
+      "label": "Telefon",
+      "value": "+373 XX XXX XXX"
+    },
+    "email": {
+      "label": "Email",
+      "value": "info@flyyogastudio.md"
+    },
+    "hours": {
+      "label": "Program de lucru",
+      "weekdays": "Luni — Vineri",
+      "saturday": "Sâmbătă",
+      "sunday": "Duminică",
+      "weekdaysHours": "8:00 — 21:00",
+      "saturdayHours": "9:00 — 19:00",
+      "sundayHours": "10:00 — 16:00"
+    },
+    "social": {
+      "label": "Rețele sociale",
+      "instagram": "Instagram",
+      "facebook": "Facebook"
+    },
+    "map": "Cum ne găsiți",
+    "writeUs": "Scrieți-ne"
+  },
+  "auth": {
+    "login": {
+      "title": "Conectare",
+      "email": "Email",
+      "password": "Parolă",
+      "submit": "Conectare",
+      "forgotPassword": "Ai uitat parola?",
+      "noAccount": "Nu ai cont?",
+      "register": "Înregistrează-te",
+      "error": "Email sau parolă incorecte"
+    },
+    "register": {
+      "title": "Înregistrare",
+      "firstName": "Prenume",
+      "lastName": "Nume",
+      "email": "Email",
+      "phone": "Telefon",
+      "password": "Parolă",
+      "submit": "Creează cont",
+      "hasAccount": "Ai deja cont?",
+      "login": "Conectare",
+      "checkEmail": "Verificați emailul",
+      "success": "Am trimis un link de confirmare la adresa ta de email.",
+      "error": "Eroare la înregistrare. Încercați din nou.",
+      "exists": "Un cont cu acest email există deja.",
+      "goToLogin": "Mergi la conectare"
+    },
+    "resetPassword": {
+      "title": "Resetare parolă",
+      "email": "Email",
+      "submit": "Trimite link-ul",
+      "success": "Link-ul de resetare a parolei a fost trimis la emailul tău.",
+      "backToLogin": "Înapoi la conectare"
+    }
+  },
+  "dashboard": {
+    "title": "Cont personal",
+    "bookings": {
+      "title": "Rezervările mele",
+      "empty": "Nu ai rezervări încă",
+      "goToSchedule": "Mergi la orar",
+      "upcoming": "Următoarele",
+      "noUpcoming": "Nu ai rezervări viitoare",
+      "history": "Istoric",
+      "status": {
+        "confirmed": "Confirmat",
+        "cancelled": "Anulat",
+        "attended": "Prezent",
+        "no_show": "Absent"
+      }
+    },
+    "profile": {
+      "title": "Profil",
+      "save": "Salvează modificările",
+      "saved": "Modificările au fost salvate",
+      "uploadPhoto": "Încarcă fotografie",
+      "changePhoto": "Schimbă fotografia",
+      "uploadError": "Nu s-a putut încărca fotografia. Încearcă din nou.",
+      "email": "Email",
+      "emailHint": "Emailul nu poate fi modificat"
+    },
+    "subscription": {
+      "title": "Abonamentul meu",
+      "noSubscription": "Abonament inactiv",
+      "expires": "Valabil până la",
+      "classesLeft": "Cursuri rămase"
+    }
+  },
+  "admin": {
+    "title": "Panou de administrare",
+    "trainers": "Instructori",
+    "schedule": "Orar",
+    "bookings": "Rezervări",
+    "subscriptions": "Abonamente",
+    "reviews": "Recenzii",
+    "hallRental": "Închiriere sală",
+    "dashboard": {
+      "nav": "Prezentare",
+      "title": "Prezentare studio",
+      "subtitle": "Indicatori cheie pentru azi",
+      "clients": "Clienți",
+      "trainers": "Instructori",
+      "trainingsToday": "Antrenamente azi",
+      "bookingsToday": "Rezervări azi",
+      "revenueToday": "Venit azi",
+      "revenueTotal": "Venit total",
+      "recent": "Rezervări recente",
+      "noRecent": "Încă nu există rezervări"
+    },
+    "trainersPage": {
+      "title": "Instructori și roluri",
+      "subtitle": "Atribuie clienților rolul de instructor",
+      "search": "Caută după nume sau telefon",
+      "name": "Nume",
+      "role": "Rol",
+      "promote": "Fă instructor",
+      "demote": "Retrage rolul",
+      "noResults": "Nimic găsit",
+      "roles": {
+        "user": "Client",
+        "trainer": "Instructor",
+        "admin": "Admin"
+      }
+    }
+  },
+  "trainer": {
+    "title": "Antrenamentele mele",
+    "subtitle": "Creează ședințe și vezi cine s-a înscris",
+    "add": "Adaugă antrenament",
+    "empty": "Nu ai creat încă niciun antrenament",
+    "noProfile": "Profilul de instructor nu este configurat. Contactează administratorul.",
+    "noBookings": "Nimeni nu s-a înscris încă la acest antrenament",
+    "cancelSession": "Anulează antrenamentul",
+    "confirmCancel": "Anulezi acest antrenament? Rezervările clienților vor fi anulate.",
+    "form": {
+      "title": "Antrenament nou",
+      "class": "Direcție",
+      "date": "Data",
+      "time": "Ora de început",
+      "seats": "Locuri",
+      "price": "Preț (MDL)",
+      "fillAll": "Completează toate câmpurile"
+    }
+  },
+  "common": {
+    "loading": "Se încarcă...",
+    "error": "Ceva a mers greșit",
+    "retry": "Încearcă din nou",
+    "save": "Salvează",
+    "cancel": "Anulează",
+    "delete": "Șterge",
+    "edit": "Editează",
+    "confirm": "Confirmă",
+    "close": "Închide",
+    "back": "Înapoi",
+    "next": "Următor",
+    "yes": "Da",
+    "no": "Nu",
+    "optional": "opțional",
+    "minutes": "min",
+    "level": {
+      "beginner": "Începător",
+      "intermediate": "Intermediar",
+      "advanced": "Avansat",
+      "all": "Pentru toți"
+    }
+  },
+  "footer": {
+    "rights": "Toate drepturile rezervate",
+    "studio": "Fly Yoga Studio"
+  }
+}

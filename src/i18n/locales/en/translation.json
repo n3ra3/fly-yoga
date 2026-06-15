@@ -1,0 +1,313 @@
+{
+  "nav": {
+    "home": "Home",
+    "schedule": "Schedule",
+    "trainers": "Trainers",
+    "services": "Services",
+    "gallery": "Gallery",
+    "hallRental": "Hall Rental",
+    "contact": "Contact",
+    "login": "Log In",
+    "register": "Sign Up",
+    "dashboard": "My Account",
+    "admin": "Admin Panel",
+    "trainer": "Trainer Area",
+    "logout": "Log Out"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Yoga studio in Chisinau",
+      "title": "Find balance. Discover yourself.",
+      "description": "Aerial yoga, group and private classes — for beginners and seasoned practitioners. Come as you are.",
+      "cta": "Book a Class",
+      "ctaSecondary": "View Schedule"
+    },
+    "services": {
+      "title": "What we offer",
+      "subtitle": "Find what suits you best",
+      "cta": "All services"
+    },
+    "benefits": {
+      "title": "Why Fly Yoga Studio",
+      "items": {
+        "trainers": {
+          "title": "Expert trainers",
+          "description": "Our instructors are certified specialists with years of dedicated practice."
+        },
+        "atmosphere": {
+          "title": "Warm atmosphere",
+          "description": "Small groups, personal attention for every student, friendly environment."
+        },
+        "schedule": {
+          "title": "Flexible schedule",
+          "description": "Morning and evening classes every day. Online booking in just a few clicks."
+        }
+      }
+    },
+    "trainers": {
+      "title": "Meet the team",
+      "subtitle": "Trainers you can trust",
+      "cta": "All trainers"
+    },
+    "reviews": {
+      "title": "Student reviews",
+      "subtitle": "Real experiences from real people",
+      "items": [
+        {
+          "name": "Anna K.",
+          "text": "Fly Yoga changed my life. I was scared of heights at first, but now it's my favourite class!"
+        },
+        {
+          "name": "Mikhail D.",
+          "text": "I've been coming for 8 months. My back pain is gone and my posture has improved. Highly recommend."
+        },
+        {
+          "name": "Elena V.",
+          "text": "The atmosphere in the studio is so warm and relaxing. You arrive tired and leave energised."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Start your journey",
+      "description": "The first class is the best way to get to know the studio. Book your spot right now.",
+      "button": "Book now"
+    }
+  },
+  "schedule": {
+    "title": "Schedule",
+    "subtitle": "Choose a convenient time",
+    "book": "Book",
+    "booked": "Booked",
+    "full": "Full",
+    "cancel": "Cancel Booking",
+    "seatsLeft": "{{count}} seats",
+    "seatsLeft_one": "{{count}} seat",
+    "loginToBook": "Log in to book",
+    "empty": "No scheduled classes yet",
+    "filters": {
+      "all": "All",
+      "today": "Today",
+      "week": "This Week"
+    }
+  },
+  "trainers": {
+    "title": "Trainers",
+    "subtitle": "Meet the team"
+  },
+  "services": {
+    "title": "Services",
+    "flyYoga": {
+      "name": "Fly Yoga",
+      "description": "Aerial yoga on hammocks. Builds flexibility, strength and balance."
+    },
+    "yoga": {
+      "name": "Yoga",
+      "description": "Classic and modern yoga styles for every level."
+    },
+    "private": {
+      "name": "Private Sessions",
+      "description": "A personalized program tailored to your goals and ability."
+    },
+    "rental": {
+      "name": "Hall Rental",
+      "description": "A spacious studio for your events."
+    }
+  },
+  "hallRental": {
+    "title": "Hall Rental",
+    "subtitle": "Book our studio for your event",
+    "form": {
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "eventDescription": "Event description",
+      "preferredDate": "Preferred date",
+      "submit": "Submit Request",
+      "success": "Request submitted! We will contact you shortly.",
+      "error": "Something went wrong. Please try again."
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Come visit us — we are always happy to see you",
+    "address": {
+      "label": "Address",
+      "value": "110 31 August 1989 St, Chisinau"
+    },
+    "phone": {
+      "label": "Phone",
+      "value": "+373 XX XXX XXX"
+    },
+    "email": {
+      "label": "Email",
+      "value": "info@flyyogastudio.md"
+    },
+    "hours": {
+      "label": "Working Hours",
+      "weekdays": "Monday — Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday",
+      "weekdaysHours": "8:00 — 21:00",
+      "saturdayHours": "9:00 — 19:00",
+      "sundayHours": "10:00 — 16:00"
+    },
+    "social": {
+      "label": "Follow us",
+      "instagram": "Instagram",
+      "facebook": "Facebook"
+    },
+    "map": "How to find us",
+    "writeUs": "Write to us"
+  },
+  "auth": {
+    "login": {
+      "title": "Log In",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log In",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "No account?",
+      "register": "Sign Up",
+      "error": "Incorrect email or password"
+    },
+    "register": {
+      "title": "Sign Up",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "password": "Password",
+      "submit": "Create Account",
+      "hasAccount": "Already have an account?",
+      "login": "Log In",
+      "checkEmail": "Check your inbox",
+      "success": "We sent a confirmation link to your email address.",
+      "error": "Registration failed. Please try again.",
+      "exists": "An account with this email already exists.",
+      "goToLogin": "Go to login"
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "email": "Email",
+      "submit": "Send Link",
+      "success": "Password reset link sent to your email.",
+      "backToLogin": "Back to Login"
+    }
+  },
+  "dashboard": {
+    "title": "My Account",
+    "bookings": {
+      "title": "My Bookings",
+      "empty": "You have no bookings yet",
+      "goToSchedule": "Go to Schedule",
+      "upcoming": "Upcoming",
+      "noUpcoming": "No upcoming bookings",
+      "history": "History",
+      "status": {
+        "confirmed": "Confirmed",
+        "cancelled": "Cancelled",
+        "attended": "Attended",
+        "no_show": "No-show"
+      }
+    },
+    "profile": {
+      "title": "Profile",
+      "save": "Save changes",
+      "saved": "Changes saved",
+      "uploadPhoto": "Upload photo",
+      "changePhoto": "Change photo",
+      "uploadError": "Could not upload photo. Please try again.",
+      "email": "Email",
+      "emailHint": "Email cannot be changed"
+    },
+    "subscription": {
+      "title": "My Subscription",
+      "noSubscription": "No active subscription",
+      "expires": "Valid until",
+      "classesLeft": "Classes left"
+    }
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "trainers": "Trainers",
+    "schedule": "Schedule",
+    "bookings": "Bookings",
+    "subscriptions": "Subscriptions",
+    "reviews": "Reviews",
+    "hallRental": "Hall Rental",
+    "dashboard": {
+      "nav": "Overview",
+      "title": "Studio overview",
+      "subtitle": "Key metrics for today",
+      "clients": "Clients",
+      "trainers": "Trainers",
+      "trainingsToday": "Classes today",
+      "bookingsToday": "Bookings today",
+      "revenueToday": "Revenue today",
+      "revenueTotal": "Total revenue",
+      "recent": "Recent bookings",
+      "noRecent": "No bookings yet"
+    },
+    "trainersPage": {
+      "title": "Trainers & roles",
+      "subtitle": "Assign the trainer role to clients",
+      "search": "Search by name or phone",
+      "name": "Name",
+      "role": "Role",
+      "promote": "Make trainer",
+      "demote": "Remove role",
+      "noResults": "Nothing found",
+      "roles": {
+        "user": "Client",
+        "trainer": "Trainer",
+        "admin": "Admin"
+      }
+    }
+  },
+  "trainer": {
+    "title": "My classes",
+    "subtitle": "Create sessions and see who booked",
+    "add": "Add class",
+    "empty": "You haven't created any classes yet",
+    "noProfile": "Trainer profile is not set up. Please contact the administrator.",
+    "noBookings": "No one has booked this class yet",
+    "cancelSession": "Cancel class",
+    "confirmCancel": "Cancel this class? Client bookings will be voided.",
+    "form": {
+      "title": "New class",
+      "class": "Type",
+      "date": "Date",
+      "time": "Start time",
+      "seats": "Seats",
+      "price": "Price (MDL)",
+      "fillAll": "Please fill in all fields"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try Again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "yes": "Yes",
+    "no": "No",
+    "optional": "optional",
+    "minutes": "min",
+    "level": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "all": "All levels"
+    }
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "studio": "Fly Yoga Studio"
+  }
+}

@@ -10,6 +10,7 @@ export interface Database {
           last_name: string
           phone: string | null
           role: 'user' | 'trainer' | 'admin'
+          is_approved: boolean
           avatar_url: string | null
           created_at: string
           updated_at: string
@@ -20,6 +21,7 @@ export interface Database {
           last_name: string
           phone?: string | null
           role?: 'user' | 'trainer' | 'admin'
+          is_approved?: boolean
           avatar_url?: string | null
           created_at?: string
           updated_at?: string
@@ -29,6 +31,7 @@ export interface Database {
           last_name?: string
           phone?: string | null
           role?: 'user' | 'trainer' | 'admin'
+          is_approved?: boolean
           avatar_url?: string | null
           updated_at?: string
         }
@@ -326,6 +329,7 @@ export interface Database {
       hall_rental_requests: {
         Row: {
           id: string
+          hall: string | null
           name: string
           phone: string
           email: string
@@ -338,6 +342,7 @@ export interface Database {
         }
         Insert: {
           id?: string
+          hall?: string | null
           name: string
           phone: string
           email: string
@@ -351,6 +356,84 @@ export interface Database {
         Update: {
           status?: 'new' | 'contacted' | 'confirmed' | 'declined'
           admin_notes?: string | null
+          updated_at?: string
+        }
+      }
+      individual_bookings: {
+        Row: {
+          id: string
+          user_id: string
+          starts_at: string
+          ends_at: string
+          status: 'pending' | 'confirmed' | 'cancelled'
+          notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          starts_at: string
+          ends_at: string
+          status?: 'pending' | 'confirmed' | 'cancelled'
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          status?: 'pending' | 'confirmed' | 'cancelled'
+          notes?: string | null
+          updated_at?: string
+        }
+      }
+      class_bookings: {
+        Row: {
+          id: string
+          user_id: string
+          starts_at: string
+          kind: string | null
+          status: 'confirmed' | 'cancelled'
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          starts_at: string
+          kind?: string | null
+          status?: 'confirmed' | 'cancelled'
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          status?: 'confirmed' | 'cancelled'
+          updated_at?: string
+        }
+      }
+      individual_requests: {
+        Row: {
+          id: string
+          name: string | null
+          phone: string
+          comment: string | null
+          status: 'new' | 'contacted' | 'done' | 'declined'
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name?: string | null
+          phone: string
+          comment?: string | null
+          status?: 'new' | 'contacted' | 'done' | 'declined'
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          name?: string | null
+          phone?: string
+          comment?: string | null
+          status?: 'new' | 'contacted' | 'done' | 'declined'
           updated_at?: string
         }
       }

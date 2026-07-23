@@ -1,24 +1,25 @@
 import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, UserRound, LogOut } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { FEATURES } from '@/config/features'
 import { Logo } from '@/components/Logo'
 import { cn } from '@/lib/utils'
 
 const publicLinks = [
-  { to: '/schedule', key: 'nav.schedule' },
-  { to: '/trainers', key: 'nav.trainers' },
-  { to: '/services', key: 'nav.services' },
-  { to: '/gallery', key: 'nav.gallery' },
-  { to: '/hall-rental', key: 'nav.hallRental' },
-  { to: '/contact', key: 'nav.contact' },
-] as const
+  { to: '/schedule', key: 'nav.schedule', show: true },
+  { to: '/trainers', key: 'nav.trainers', show: FEATURES.trainers },
+  { to: '/services', key: 'nav.services', show: true },
+  { to: '/gallery', key: 'nav.gallery', show: true },
+  { to: '/hall-rental', key: 'nav.hallRental', show: FEATURES.hallRental },
+  { to: '/contact', key: 'nav.contact', show: true },
+].filter((l) => l.show)
 
 export function Navbar() {
   const { t } = useTranslation()
-  const { session, isAdmin, isTrainer, signOut } = useAuth()
+  const { session, isAdmin, isTrainer, isLoading, signOut } = useAuth()
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -47,38 +48,48 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-4 lg:flex">
+        <div className="hidden shrink-0 items-center gap-4 lg:flex">
           <LanguageSwitcher />
-          {session ? (
+          {isLoading ? (
+            /* пока проверяем сессию — держим место, чтобы шапка не дёргалась */
+            <div className="h-9 w-[104px]" aria-hidden />
+          ) : session ? (
             <>
               {isAdmin && (
-                <Link to="/admin" className="text-[0.95rem] font-medium text-foreground/80 transition-colors hover:text-primary">
+                <Link to="/admin" className="whitespace-nowrap text-[0.95rem] font-medium text-foreground/80 transition-colors hover:text-primary">
                   {t('nav.admin')}
                 </Link>
               )}
               {isTrainer && (
-                <Link to="/trainer" className="text-[0.95rem] font-medium text-foreground/80 transition-colors hover:text-primary">
+                <Link to="/trainer" className="whitespace-nowrap text-[0.95rem] font-medium text-foreground/80 transition-colors hover:text-primary">
                   {t('nav.trainer')}
                 </Link>
               )}
-              <Link to="/dashboard" className="text-[0.95rem] font-medium text-foreground/80 transition-colors hover:text-primary">
-                {t('nav.dashboard')}
+              <Link
+                to="/dashboard"
+                aria-label={t('nav.dashboard')}
+                title={t('nav.dashboard')}
+                className="flex h-9 w-9 items-center justify-center rounded-full text-foreground/70 transition-colors hover:bg-muted hover:text-primary"
+              >
+                <UserRound size={19} />
               </Link>
               <button
                 onClick={handleSignOut}
-                className="text-[0.95rem] font-medium text-foreground/80 transition-colors hover:text-primary"
+                aria-label={t('nav.logout')}
+                title={t('nav.logout')}
+                className="flex h-9 w-9 items-center justify-center rounded-full text-foreground/70 transition-colors hover:bg-muted hover:text-destructive"
               >
-                {t('nav.logout')}
+                <LogOut size={19} />
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="text-[0.95rem] font-medium text-foreground/80 transition-colors hover:text-primary">
+              <Link to="/login" className="whitespace-nowrap text-[0.95rem] font-medium text-foreground/80 transition-colors hover:text-primary">
                 {t('nav.login')}
               </Link>
               <Link
                 to="/register"
-                className="rounded-full bg-primary px-5 py-2 text-[0.95rem] font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                className="whitespace-nowrap rounded-full bg-primary px-5 py-2 text-[0.95rem] font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 {t('nav.register')}
               </Link>

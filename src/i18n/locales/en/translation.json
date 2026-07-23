@@ -17,10 +17,63 @@
   "home": {
     "hero": {
       "eyebrow": "Yoga studio in Chisinau",
-      "title": "Find balance. Discover yourself.",
-      "description": "Aerial yoga, group and private classes — for beginners and seasoned practitioners. Come as you are.",
-      "cta": "Book a Class",
-      "ctaSecondary": "View Schedule"
+      "line1": "Lightness.",
+      "line2": "Freedom.",
+      "line3": "Harmony.",
+      "title": "Lightness. Freedom. Harmony.",
+      "description": "Fly Yoga is yoga in hammocks that gives you freedom of movement and harmony of body and soul.",
+      "cta": "Book a trial class",
+      "ctaSecondary": "Explore classes"
+    },
+    "features": {
+      "body": {
+        "title": "Stronger body",
+        "text": "Builds strength, flexibility and endurance."
+      },
+      "stress": {
+        "title": "Stress relief",
+        "text": "Helps you relax and restore your energy."
+      },
+      "back": {
+        "title": "Healthy back",
+        "text": "Improves posture and relieves spinal pressure."
+      },
+      "fly": {
+        "title": "Lightness and flight",
+        "text": "Experience the feeling of weightlessness and freedom."
+      }
+    },
+    "directions": {
+      "eyebrow": "Our classes",
+      "title": "Choose your time to unwind",
+      "cta": "View schedule",
+      "items": {
+        "morning": { "title": "Morning groups" },
+        "evening": { "title": "Evening groups" },
+        "weekend": { "title": "Weekend groups" }
+      }
+    },
+    "trial": {
+      "eyebrow": "First trial class",
+      "title": "Try Fly Yoga",
+      "points": {
+        "a": "Get to know the studio and your trainer",
+        "b": "Suitable for any fitness level",
+        "c": "Hammock rental included"
+      },
+      "cta": "Book a trial class",
+      "note": "Our administrator will contact you to confirm."
+    },
+    "why": {
+      "eyebrow": "Why people choose us",
+      "title": "Everything is designed for your comfort",
+      "items": {
+        "studio": "Modern studio and cosy atmosphere",
+        "trainers": "Certified instructors",
+        "equipment": "Safe equipment and premium hammocks",
+        "groups": "Small groups and a personal approach",
+        "location": "Convenient location in central Chisinau"
+      }
     },
     "services": {
       "title": "What we offer",
@@ -80,6 +133,9 @@
     "booked": "Booked",
     "full": "Full",
     "cancel": "Cancel Booking",
+    "notApproved": "Under review",
+    "notApprovedHint": "Your account has not been approved by an administrator yet",
+    "notApprovedBanner": "Your account is under review by an administrator. Once approved, you'll be able to book classes.",
     "seatsLeft": "{{count}} seats",
     "seatsLeft_one": "{{count}} seat",
     "loginToBook": "Log in to book",
@@ -88,6 +144,40 @@
       "all": "All",
       "today": "Today",
       "week": "This Week"
+    },
+    "calendar": {
+      "groupRu": "Group (RU)",
+      "groupRo": "Group (RO)",
+      "langRu": "RU",
+      "langRo": "RO",
+      "today": "Today",
+      "weekend": "Weekend",
+      "holiday": "Holiday",
+      "openHours": "Working hours",
+      "prevMonth": "Previous month",
+      "nextMonth": "Next month"
+    },
+    "week": {
+      "sessionLen": "{{min}} min session",
+      "groupHint": "Pick a class and book. Each class lasts 75 minutes.",
+      "noClasses": "No classes on this day",
+      "passed": "Class has passed",
+      "prev": "Previous week",
+      "next": "Next week",
+      "thisWeek": "This week",
+      "book": "Book",
+      "yourBooking": "Your booking",
+      "occupied": "Booked",
+      "free": "Free all day",
+      "processing": "Pending",
+      "confirmed": "Confirmed",
+      "individualTitle": "Individual session",
+      "pickHint": "Pick a free time (75 min). Busy slots are shown for reference.",
+      "freeBook": "Free",
+      "noSlots": "No free slots on this day",
+      "slotTaken": "This slot was just taken. Please pick another time.",
+      "successTitle": "Request sent!",
+      "successAdmin": "The administrator will contact you to confirm. If this is your first session, we'll go over the details."
     }
   },
   "trainers": {
@@ -95,36 +185,112 @@
     "subtitle": "Meet the team"
   },
   "services": {
-    "title": "Services",
+    "eyebrow": "What we offer",
+    "title": "Studio services",
+    "subtitle": "Aerial yoga classes in hammocks and hall rentals for your events.",
     "flyYoga": {
-      "name": "Fly Yoga",
-      "description": "Aerial yoga on hammocks. Builds flexibility, strength and balance."
+      "eyebrow": "Class",
+      "title": "Fly Yoga — yoga in hammocks",
+      "description": "Aerial yoga on suspended hammocks builds flexibility, strength and balance, gently relieves pressure on the spine and gives a feeling of flight. Suitable for any level — from beginners to experienced practitioners.",
+      "cta": "Book a class",
+      "features": {
+        "a": "75-minute classes in small groups",
+        "b": "Groups in Russian and Romanian",
+        "c": "Premium hammocks and trainer support",
+        "d": "Morning, evening and weekend groups"
+      }
     },
-    "yoga": {
-      "name": "Yoga",
-      "description": "Classic and modern yoga styles for every level."
+    "gallery": {
+      "hint": "The atmosphere of our classes"
     },
-    "private": {
-      "name": "Private Sessions",
-      "description": "A personalized program tailored to your goals and ability."
+    "group": {
+      "eyebrow": "Group classes",
+      "title": "Classes in a group by schedule",
+      "description": "Practice in a small group at a convenient time. Pick a day and time in the schedule and book online in a couple of clicks.",
+      "cta": "View schedule",
+      "points": {
+        "a": "Groups in Russian and Romanian",
+        "b": "Morning, evening and weekend groups",
+        "c": "Online booking and cancellation in your account"
+      }
+    },
+    "individual": {
+      "eyebrow": "Individual sessions",
+      "title": "Personal training",
+      "description": "One-on-one session with a trainer tailored to your goals and level. Leave your number — the administrator will call you back, help choose a convenient time and answer your questions.",
+      "points": {
+        "a": "A program tailored to your goals and ability",
+        "b": "Convenient time by arrangement",
+        "c": "You can train as a pair (e.g. with a friend)"
+      },
+      "form": {
+        "title": "Leave a request — we'll call you back",
+        "name": "Name",
+        "phone": "Phone",
+        "comment": "Comment",
+        "commentPlaceholder": "Preferred time, number of people, wishes…",
+        "submit": "Request a call",
+        "note": "The administrator will contact you and help arrange the session.",
+        "successTitle": "Request sent!",
+        "success": "Thank you! The administrator will call you back shortly.",
+        "error": "Something went wrong. Please try again."
+      }
     },
     "rental": {
-      "name": "Hall Rental",
-      "description": "A spacious studio for your events."
+      "eyebrow": "Rental",
+      "title": "Hall rental",
+      "description": "We rent halls for training, workshops, photo shoots and events. Two halls to choose from — for a small group or a large event.",
+      "cta": "Send a request",
+      "small": {
+        "name": "Small hall",
+        "capacity": "up to 2 people",
+        "area": "≈ 20 m²",
+        "description": "A cozy space for individual and paired sessions and photo shoots."
+      },
+      "big": {
+        "name": "Large hall",
+        "capacity": "up to 10 people",
+        "area": "≈ 50 m²",
+        "description": "A spacious, bright hall with hammocks for group classes, workshops and events."
+      }
+    }
+  },
+  "gallery": {
+    "eyebrow": "Our space",
+    "title": "Studio gallery",
+    "subtitle": "Take a look inside the studio — the halls, kitchen and all the amenities.",
+    "categories": {
+      "hallBig": "Large hall",
+      "hallSmall": "Small hall",
+      "kitchen": "Kitchen",
+      "changing": "Changing room",
+      "toilet": "Restroom"
     }
   },
   "hallRental": {
     "title": "Hall Rental",
-    "subtitle": "Book our studio for your event",
+    "subtitle": "Send a request — our administrator will contact you, clarify the details and confirm the booking.",
     "form": {
+      "chooseHall": "Choose a hall",
       "name": "Name",
       "phone": "Phone",
       "email": "Email",
-      "eventDescription": "Event description",
+      "eventDescription": "Describe your event",
+      "eventPlaceholder": "Type of event, number of people, duration…",
       "preferredDate": "Preferred date",
-      "submit": "Submit Request",
-      "success": "Request submitted! We will contact you shortly.",
+      "submit": "Submit request",
+      "successTitle": "Request sent!",
+      "success": "Thank you! Our administrator will contact you shortly to confirm.",
       "error": "Something went wrong. Please try again."
+    },
+    "info": {
+      "title": "How it works",
+      "points": {
+        "a": "You send a request with a preferred date and hall",
+        "b": "The administrator contacts you to clarify details and pricing",
+        "c": "We confirm the booking — the hall is yours"
+      },
+      "note": "A request is not binding — it's a booking enquiry."
     }
   },
   "contact": {
@@ -184,7 +350,8 @@
       "success": "We sent a confirmation link to your email address.",
       "error": "Registration failed. Please try again.",
       "exists": "An account with this email already exists.",
-      "goToLogin": "Go to login"
+      "goToLogin": "Go to login",
+      "approvalNote": "After registration, booking classes becomes available once approved by an administrator."
     },
     "resetPassword": {
       "title": "Reset Password",
@@ -229,7 +396,23 @@
   },
   "admin": {
     "title": "Admin Panel",
+    "clients": "Clients",
     "trainers": "Trainers",
+    "clientsPage": {
+      "title": "Clients",
+      "subtitle": "Approve new clients — only then can they book classes.",
+      "pending": "Pending",
+      "all": "All",
+      "search": "Search by name or phone",
+      "name": "Name",
+      "status": "Status",
+      "approved": "Approved",
+      "waiting": "Waiting",
+      "approve": "Approve",
+      "revoke": "Revoke",
+      "noPending": "No clients waiting for approval",
+      "noResults": "Nothing found"
+    },
     "schedule": "Schedule",
     "bookings": "Bookings",
     "subscriptions": "Subscriptions",
@@ -298,6 +481,7 @@
     "yes": "Yes",
     "no": "No",
     "optional": "optional",
+    "more": "Learn more",
     "minutes": "min",
     "level": {
       "beginner": "Beginner",

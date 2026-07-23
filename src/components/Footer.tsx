@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Instagram, Facebook } from 'lucide-react'
 import { Logo } from '@/components/Logo'
+import { FEATURES } from '@/config/features'
 
 const INSTAGRAM_URL = 'https://www.instagram.com/fly_yoga_studio/'
 const FACEBOOK_URL  = 'https://www.facebook.com/flyogastudio'
@@ -42,12 +43,16 @@ export function Footer() {
 
           {/* Nav links */}
           <nav className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-muted-foreground">
-            <Link to="/schedule"   className="hover:text-foreground transition-colors">{t('nav.schedule')}</Link>
-            <Link to="/trainers"   className="hover:text-foreground transition-colors">{t('nav.trainers')}</Link>
-            <Link to="/services"   className="hover:text-foreground transition-colors">{t('nav.services')}</Link>
-            <Link to="/gallery"    className="hover:text-foreground transition-colors">{t('nav.gallery')}</Link>
-            <Link to="/hall-rental"className="hover:text-foreground transition-colors">{t('nav.hallRental')}</Link>
-            <Link to="/contact"    className="hover:text-foreground transition-colors">{t('nav.contact')}</Link>
+            <Link to="/schedule" className="hover:text-foreground transition-colors">{t('nav.schedule')}</Link>
+            {FEATURES.trainers && (
+              <Link to="/trainers" className="hover:text-foreground transition-colors">{t('nav.trainers')}</Link>
+            )}
+            <Link to="/services" className="hover:text-foreground transition-colors">{t('nav.services')}</Link>
+            <Link to="/gallery" className="hover:text-foreground transition-colors">{t('nav.gallery')}</Link>
+            {FEATURES.hallRental && (
+              <Link to="/hall-rental" className="hover:text-foreground transition-colors">{t('nav.hallRental')}</Link>
+            )}
+            <Link to="/contact" className="hover:text-foreground transition-colors">{t('nav.contact')}</Link>
           </nav>
         </div>
 

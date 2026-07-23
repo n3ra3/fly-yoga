@@ -10,6 +10,9 @@ export type Subscription = Database['public']['Tables']['subscriptions']['Row']
 export type Attendance = Database['public']['Tables']['attendance']['Row']
 export type Review = Database['public']['Tables']['reviews']['Row']
 export type HallRentalRequest = Database['public']['Tables']['hall_rental_requests']['Row']
+export type IndividualBooking = Database['public']['Tables']['individual_bookings']['Row']
+export type ClassBooking = Database['public']['Tables']['class_bookings']['Row']
+export type IndividualRequest = Database['public']['Tables']['individual_requests']['Row']
 
 export type Language = 'ru' | 'ro' | 'en'
 export type UserRole = 'user' | 'trainer' | 'admin'

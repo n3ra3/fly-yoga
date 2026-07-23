@@ -1,31 +1,41 @@
 import { useEffect, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Clock, User, Loader2 } from 'lucide-react'
+import { Clock, Loader2 } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
 import { formatDate, formatTime, cn } from '@/lib/utils'
-import type { BookingWithSchedule } from '@/types'
+import { SESSION_MINUTES, minutesToTime } from '@/data/schedule'
+
+interface ClassBooking {
+  id: string
+  starts_at: string
+  kind: string | null
+  status: 'confirmed' | 'cancelled'
+}
+
+const KIND_LABEL: Record<string, string> = {
+  groupRu: 'schedule.calendar.groupRu',
+  groupRo: 'schedule.calendar.groupRo',
+}
 
 export function BookingsPage() {
   const { t, i18n } = useTranslation()
   const { user } = useAuth()
   const lang = i18n.language
 
-  const [bookings, setBookings] = useState<BookingWithSchedule[]>([])
+  const [items, setItems] = useState<ClassBooking[]>([])
   const [loading, setLoading] = useState(true)
   const [busyId, setBusyId] = useState<string | null>(null)
 
   const load = useCallback(async () => {
     if (!user) return
     const { data } = await supabase
-      .from('bookings')
-      .select(
-        '*, schedule(*, classes(id,name_ru,name_ro,name_en,duration_min,level,color), trainers(id,first_name,last_name,photo_url))',
-      )
+      .from('class_bookings')
+      .select('id,starts_at,kind,status')
       .eq('user_id', user.id)
-      .order('booked_at', { ascending: false })
-    setBookings((data as BookingWithSchedule[]) ?? [])
+      .order('starts_at', { ascending: false })
+    setItems((data as ClassBooking[]) ?? [])
     setLoading(false)
   }, [user])
 
@@ -35,23 +45,18 @@ export function BookingsPage() {
 
   async function cancel(id: string) {
     setBusyId(id)
-    await supabase
-      .from('bookings')
-      .update({ status: 'cancelled', cancelled_at: new Date().toISOString() })
-      .eq('id', id)
+    await supabase.from('class_bookings').update({ status: 'cancelled' }).eq('id', id)
     await load()
     setBusyId(null)
   }
 
-  function className(b: BookingWithSchedule) {
-    const c = b.schedule.classes
-    return lang === 'ro' ? c.name_ro : lang === 'en' ? c.name_en : c.name_ru
+  function endTime(startISO: string) {
+    const s = new Date(startISO)
+    return minutesToTime(s.getHours() * 60 + s.getMinutes() + SESSION_MINUTES)
   }
 
-  const active = bookings.filter(
-    (b) => b.status === 'confirmed' && new Date(b.schedule.starts_at) > new Date(),
-  )
-  const past = bookings.filter((b) => !active.includes(b))
+  const upcoming = items.filter((b) => b.status === 'confirmed' && new Date(b.starts_at) > new Date())
+  const past = items.filter((b) => !upcoming.includes(b))
 
   if (loading) {
     return (
@@ -65,7 +70,7 @@ export function BookingsPage() {
     <div>
       <h2 className="text-xl font-semibold">{t('dashboard.bookings.title')}</h2>
 
-      {bookings.length === 0 ? (
+      {items.length === 0 ? (
         <div className="mt-6">
           <p className="text-muted-foreground">{t('dashboard.bookings.empty')}</p>
           <Link to="/schedule" className="mt-4 inline-block text-sm text-primary hover:underline">
@@ -75,8 +80,8 @@ export function BookingsPage() {
       ) : (
         <div className="mt-6 flex flex-col gap-8">
           <Section title={t('dashboard.bookings.upcoming')} empty={t('dashboard.bookings.noUpcoming')}>
-            {active.map((b) => (
-              <Row key={b.id} title={className(b)} schedule={b.schedule} lang={lang}>
+            {upcoming.map((b) => (
+              <Row key={b.id} booking={b} lang={lang} endTime={endTime}>
                 <button
                   onClick={() => cancel(b.id)}
                   disabled={busyId === b.id}
@@ -91,7 +96,7 @@ export function BookingsPage() {
           {past.length > 0 && (
             <Section title={t('dashboard.bookings.history')}>
               {past.map((b) => (
-                <Row key={b.id} title={className(b)} schedule={b.schedule} lang={lang} muted>
+                <Row key={b.id} booking={b} lang={lang} endTime={endTime} muted>
                   <span
                     className={cn(
                       'rounded-full px-3 py-1 text-xs font-medium',
@@ -100,7 +105,9 @@ export function BookingsPage() {
                         : 'bg-muted text-muted-foreground',
                     )}
                   >
-                    {t(`dashboard.bookings.status.${b.status}`)}
+                    {b.status === 'cancelled'
+                      ? t('dashboard.bookings.status.cancelled')
+                      : t('dashboard.bookings.status.attended')}
                   </span>
                 </Row>
               ))}
@@ -135,18 +142,22 @@ function Section({
 }
 
 function Row({
-  title,
-  schedule,
+  booking,
   lang,
+  endTime,
   muted,
   children,
 }: {
-  title: string
-  schedule: BookingWithSchedule['schedule']
+  booking: ClassBooking
   lang: string
+  endTime: (iso: string) => string
   muted?: boolean
   children: React.ReactNode
 }) {
+  const { t } = useTranslation()
+  const label = booking.kind && KIND_LABEL[booking.kind] ? t(KIND_LABEL[booking.kind]) : t('schedule.calendar.groupRu')
+  const accent = booking.kind === 'groupRo' ? 'bg-sky-500' : 'bg-primary'
+
   return (
     <div
       className={cn(
@@ -155,19 +166,13 @@ function Row({
       )}
     >
       <div className="flex items-start gap-3">
-        <div
-          className="mt-1 h-9 w-1.5 shrink-0 rounded-full"
-          style={{ background: schedule.classes.color ?? 'hsl(var(--primary))' }}
-        />
+        <div className={cn('mt-1 h-9 w-1.5 shrink-0 rounded-full', accent)} />
         <div>
-          <p className="font-medium">{title}</p>
+          <p className="font-medium">{label}</p>
           <div className="mt-0.5 flex flex-wrap gap-x-4 gap-y-0.5 text-sm text-muted-foreground">
-            <span>{formatDate(schedule.starts_at, lang)}</span>
+            <span>{formatDate(booking.starts_at, lang)}</span>
             <span className="inline-flex items-center gap-1">
-              <Clock size={13} /> {formatTime(schedule.starts_at, lang)}
-            </span>
-            <span className="inline-flex items-center gap-1">
-              <User size={13} /> {schedule.trainers.first_name} {schedule.trainers.last_name}
+              <Clock size={13} /> {formatTime(booking.starts_at, lang)}–{endTime(booking.starts_at)}
             </span>
           </div>
         </div>

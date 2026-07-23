@@ -17,10 +17,63 @@
   "home": {
     "hero": {
       "eyebrow": "Studio de yoga în Chișinău",
-      "title": "Găsește echilibrul. Descoperă-te.",
-      "description": "Yoga aeriană, cursuri de grup și individuale — pentru începători și practicanți avansați. Vino așa cum ești.",
-      "cta": "Înscrie-te la curs",
-      "ctaSecondary": "Vezi orarul"
+      "line1": "Lejeritate.",
+      "line2": "Libertate.",
+      "line3": "Armonie.",
+      "title": "Lejeritate. Libertate. Armonie.",
+      "description": "Fly Yoga este yoga în hamace, care îți oferă libertate de mișcare și armonie a trupului și sufletului.",
+      "cta": "Înscrie-te la ședința de probă",
+      "ctaSecondary": "Vezi direcțiile"
+    },
+    "features": {
+      "body": {
+        "title": "Întărirea corpului",
+        "text": "Dezvoltă forța, flexibilitatea și rezistența."
+      },
+      "stress": {
+        "title": "Reducerea stresului",
+        "text": "Te ajută să te relaxezi și să-ți refaci energia."
+      },
+      "back": {
+        "title": "Spate sănătos",
+        "text": "Îmbunătățește postura și descarcă coloana vertebrală."
+      },
+      "fly": {
+        "title": "Lejeritate și zbor",
+        "text": "Trăiește senzația de imponderabilitate și libertate."
+      }
+    },
+    "directions": {
+      "eyebrow": "Cursurile noastre",
+      "title": "Alege-ți timpul pentru relaxare",
+      "cta": "Vezi orarul",
+      "items": {
+        "morning": { "title": "Grupe de dimineață" },
+        "evening": { "title": "Grupe de seară" },
+        "weekend": { "title": "Grupe de weekend" }
+      }
+    },
+    "trial": {
+      "eyebrow": "Prima ședință de probă",
+      "title": "Încearcă Fly Yoga",
+      "points": {
+        "a": "Faci cunoștință cu studioul și antrenorul",
+        "b": "Potrivit pentru orice nivel de pregătire",
+        "c": "Închirierea hamacului inclusă"
+      },
+      "cta": "Înscrie-te la ședința de probă",
+      "note": "Administratorul nostru te va contacta pentru confirmare."
+    },
+    "why": {
+      "eyebrow": "De ce ne aleg",
+      "title": "Totul este gândit pentru confortul tău",
+      "items": {
+        "studio": "Studio modern și atmosferă primitoare",
+        "trainers": "Instructori certificați",
+        "equipment": "Echipament sigur și hamace premium",
+        "groups": "Grupe mici și abordare individuală",
+        "location": "Amplasare convenabilă în centrul Chișinăului"
+      }
     },
     "services": {
       "title": "Direcțiile noastre",
@@ -80,6 +133,9 @@
     "booked": "Ești înscris",
     "full": "Locuri epuizate",
     "cancel": "Anulează rezervarea",
+    "notApproved": "În verificare",
+    "notApprovedHint": "Contul nu a fost încă aprobat de administrator",
+    "notApprovedBanner": "Contul tău este în verificare la administrator. După aprobare vei putea rezerva ședințe.",
     "seatsLeft": "{{count}} locuri",
     "seatsLeft_one": "{{count}} loc",
     "loginToBook": "Conectează-te pentru a rezerva",
@@ -88,6 +144,40 @@
       "all": "Toate",
       "today": "Azi",
       "week": "Săptămâna aceasta"
+    },
+    "calendar": {
+      "groupRu": "Grupă (rusă)",
+      "groupRo": "Grupă (română)",
+      "langRu": "rus.",
+      "langRo": "rom.",
+      "today": "Azi",
+      "weekend": "Weekend",
+      "holiday": "Sărbătoare",
+      "openHours": "Program de lucru",
+      "prevMonth": "Luna precedentă",
+      "nextMonth": "Luna următoare"
+    },
+    "week": {
+      "sessionLen": "ședință {{min}} min",
+      "groupHint": "Alege o ședință și rezervă. Ședința durează 75 de minute.",
+      "noClasses": "Nu sunt ședințe în această zi",
+      "passed": "Ședința a trecut",
+      "prev": "Săptămâna precedentă",
+      "next": "Săptămâna următoare",
+      "thisWeek": "Săptămâna aceasta",
+      "book": "Rezervă",
+      "yourBooking": "Rezervarea ta",
+      "occupied": "Ocupat",
+      "free": "Liber toată ziua",
+      "processing": "În procesare",
+      "confirmed": "Confirmat",
+      "individualTitle": "Ședință individuală",
+      "pickHint": "Alege o oră liberă (75 min). Orele ocupate sunt afișate informativ.",
+      "freeBook": "Liber",
+      "noSlots": "Nu sunt sloturi libere în această zi",
+      "slotTaken": "Acest slot tocmai a fost ocupat. Alege altă oră.",
+      "successTitle": "Cerere trimisă!",
+      "successAdmin": "Administratorul te va contacta pentru confirmare. Dacă este prima ta ședință, vom clarifica detaliile."
     }
   },
   "trainers": {
@@ -95,36 +185,112 @@
     "subtitle": "Cunoaște echipa"
   },
   "services": {
-    "title": "Servicii",
+    "eyebrow": "Ce oferim",
+    "title": "Serviciile studioului",
+    "subtitle": "Cursuri de yoga aeriană în hamace și închiriere de săli pentru evenimentele tale.",
     "flyYoga": {
-      "name": "Fly Yoga",
-      "description": "Yoga aeriană pe hamace. Dezvoltă flexibilitatea, forța și echilibrul."
+      "eyebrow": "Direcție",
+      "title": "Fly Yoga — yoga în hamace",
+      "description": "Yoga aeriană pe hamace suspendate dezvoltă flexibilitatea, forța și echilibrul, descarcă blând coloana vertebrală și oferă senzația de zbor. Potrivită pentru orice nivel — de la începători la practicanți avansați.",
+      "cta": "Înscrie-te la curs",
+      "features": {
+        "a": "Ședințe de 75 de minute în grupe mici",
+        "b": "Grupe în limba rusă și română",
+        "c": "Hamace premium și asistența antrenorului",
+        "d": "Grupe de dimineață, de seară și de weekend"
+      }
     },
-    "yoga": {
-      "name": "Yoga",
-      "description": "Stiluri clasice și moderne de yoga pentru orice nivel."
+    "gallery": {
+      "hint": "Atmosfera ședințelor noastre"
     },
-    "private": {
-      "name": "Cursuri individuale",
-      "description": "Program personalizat adaptat obiectivelor și posibilităților tale."
+    "group": {
+      "eyebrow": "Ședințe de grup",
+      "title": "Ședințe în grup după orar",
+      "description": "Practică într-un grup mic la o oră convenabilă. Alege ziua și ora în orar și rezervă online din câteva clicuri.",
+      "cta": "Vezi orarul",
+      "points": {
+        "a": "Grupe în limba rusă și română",
+        "b": "Grupe de dimineață, de seară și de weekend",
+        "c": "Rezervare și anulare online în contul tău"
+      }
+    },
+    "individual": {
+      "eyebrow": "Ședințe individuale",
+      "title": "Antrenament personal",
+      "description": "Ședință unu la unu cu antrenorul, adaptată obiectivelor și nivelului tău. Lasă numărul — administratorul te va suna, te va ajuta să alegi o oră convenabilă și va răspunde la întrebări.",
+      "points": {
+        "a": "Program adaptat obiectivelor și posibilităților tale",
+        "b": "Oră convenabilă prin înțelegere",
+        "c": "Poți practica în doi (de ex. cu o prietenă)"
+      },
+      "form": {
+        "title": "Lasă o cerere — te sunăm noi",
+        "name": "Nume",
+        "phone": "Telefon",
+        "comment": "Comentariu",
+        "commentPlaceholder": "Ora convenabilă, numărul de persoane, dorințe…",
+        "submit": "Solicită un apel",
+        "note": "Administratorul te va contacta și te va ajuta să stabilești ședința.",
+        "successTitle": "Cerere trimisă!",
+        "success": "Mulțumim! Administratorul te va suna în curând.",
+        "error": "A apărut o eroare. Încearcă din nou."
+      }
     },
     "rental": {
-      "name": "Închiriere sală",
-      "description": "Sală spațioasă pentru evenimentele tale."
+      "eyebrow": "Închiriere",
+      "title": "Închiriere sală",
+      "description": "Închiriem săli pentru antrenamente, ateliere, ședințe foto și evenimente. Două săli la alegere — pentru o grupă mică sau un eveniment mare.",
+      "cta": "Trimite o cerere",
+      "small": {
+        "name": "Sala mică",
+        "capacity": "până la 2 persoane",
+        "area": "≈ 20 m²",
+        "description": "Un spațiu confortabil pentru ședințe individuale și în doi, precum și ședințe foto."
+      },
+      "big": {
+        "name": "Sala mare",
+        "capacity": "până la 10 persoane",
+        "area": "≈ 50 m²",
+        "description": "O sală spațioasă și luminoasă cu hamace pentru cursuri de grup, ateliere și evenimente."
+      }
+    }
+  },
+  "gallery": {
+    "eyebrow": "Spațiul nostru",
+    "title": "Galeria studioului",
+    "subtitle": "Vezi cum arată studioul din interior — sălile, bucătăria și toate facilitățile.",
+    "categories": {
+      "hallBig": "Sala mare",
+      "hallSmall": "Sala mică",
+      "kitchen": "Bucătărie",
+      "changing": "Vestiar",
+      "toilet": "Toaletă"
     }
   },
   "hallRental": {
     "title": "Închiriere sală",
-    "subtitle": "Rezervă sala noastră pentru evenimentul tău",
+    "subtitle": "Trimite o cerere — administratorul te va contacta, va clarifica detaliile și va confirma rezervarea.",
     "form": {
+      "chooseHall": "Alege sala",
       "name": "Nume",
       "phone": "Telefon",
       "email": "Email",
-      "eventDescription": "Descrierea evenimentului",
+      "eventDescription": "Descrie evenimentul",
+      "eventPlaceholder": "Tipul evenimentului, numărul de persoane, durata…",
       "preferredDate": "Data dorită",
       "submit": "Trimite cererea",
-      "success": "Cererea a fost trimisă! Vă vom contacta în curând.",
+      "successTitle": "Cerere trimisă!",
+      "success": "Mulțumim! Administratorul te va contacta în curând pentru confirmare.",
       "error": "A apărut o eroare. Vă rugăm să încercați din nou."
+    },
+    "info": {
+      "title": "Cum funcționează",
+      "points": {
+        "a": "Trimiți o cerere cu data dorită și sala",
+        "b": "Administratorul te contactează pentru detalii și preț",
+        "c": "Confirmăm rezervarea — sala este a ta"
+      },
+      "note": "Cererea nu te obligă la nimic — este o solicitare de rezervare."
     }
   },
   "contact": {
@@ -184,7 +350,8 @@
       "success": "Am trimis un link de confirmare la adresa ta de email.",
       "error": "Eroare la înregistrare. Încercați din nou.",
       "exists": "Un cont cu acest email există deja.",
-      "goToLogin": "Mergi la conectare"
+      "goToLogin": "Mergi la conectare",
+      "approvalNote": "După înregistrare, rezervarea ședințelor devine disponibilă după aprobarea de către administrator."
     },
     "resetPassword": {
       "title": "Resetare parolă",
@@ -229,7 +396,23 @@
   },
   "admin": {
     "title": "Panou de administrare",
+    "clients": "Clienți",
     "trainers": "Instructori",
+    "clientsPage": {
+      "title": "Clienți",
+      "subtitle": "Aprobă clienții noi — abia atunci vor putea rezerva ședințe.",
+      "pending": "În așteptare",
+      "all": "Toți",
+      "search": "Caută după nume sau telefon",
+      "name": "Nume",
+      "status": "Status",
+      "approved": "Aprobat",
+      "waiting": "În așteptare",
+      "approve": "Aprobă",
+      "revoke": "Retrage",
+      "noPending": "Niciun client în așteptarea aprobării",
+      "noResults": "Nimic găsit"
+    },
     "schedule": "Orar",
     "bookings": "Rezervări",
     "subscriptions": "Abonamente",
@@ -298,6 +481,7 @@
     "yes": "Da",
     "no": "Nu",
     "optional": "opțional",
+    "more": "Detalii",
     "minutes": "min",
     "level": {
       "beginner": "Începător",

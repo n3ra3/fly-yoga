@@ -46,6 +46,8 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        // Крупные заголовки — сериф с поддержкой кириллицы
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
       },
     },
   },

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Suspense } from 'react'
 
 import { AuthProvider } from '@/contexts/AuthContext'
+import { LotusBackground } from '@/components/LotusBackground'
 import { PublicLayout } from '@/layouts/PublicLayout'
 import { DashboardLayout } from '@/layouts/DashboardLayout'
 import { AdminLayout } from '@/layouts/AdminLayout'
@@ -21,6 +22,7 @@ import { BookingsPage } from '@/pages/BookingsPage'
 import { ProfilePage } from '@/pages/ProfilePage'
 import { AdminPage } from '@/pages/AdminPage'
 import { AdminTrainersPage } from '@/pages/admin/AdminTrainersPage'
+import { AdminClientsPage } from '@/pages/admin/AdminClientsPage'
 import { TrainerSchedulePage } from '@/pages/trainer/TrainerSchedulePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 
@@ -28,6 +30,8 @@ export function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        {/* Декоративный лотос на фоне — виден на всех страницах */}
+        <LotusBackground />
         <Suspense fallback={null}>
           <Routes>
             <Route element={<PublicLayout />}>
@@ -55,6 +59,7 @@ export function App() {
 
             <Route element={<AdminLayout />}>
               <Route path="/admin" element={<AdminPage />} />
+              <Route path="/admin/clients" element={<AdminClientsPage />} />
               <Route path="/admin/trainers" element={<AdminTrainersPage />} />
             </Route>
 

@@ -46,6 +46,34 @@ create table if not exists public.profiles (
 
 create index if not exists profiles_role_idx on public.profiles(role);
 
+-- Одобрение клиента админом. Новые пользователи — false (не могут записываться),
+-- пока администратор не подтвердит. Персонал (admin/trainer) одобряется автоматически.
+alter table public.profiles add column if not exists is_approved boolean not null default false;
+update public.profiles set is_approved = true where role in ('admin', 'trainer') and is_approved = false;
+
+-- Возвращает, одобрен ли текущий пользователь.
+create or replace function public.is_approved()
+returns boolean language sql stable security definer as $$
+  select coalesce(is_approved, false) from public.profiles where id = auth.uid();
+$$;
+
+-- Защита: обычный пользователь не может сам поменять свою роль или одобрение.
+-- Только админ вправе менять поля role и is_approved.
+create or replace function public.protect_profile_fields()
+returns trigger language plpgsql security definer as $$
+begin
+  if public.get_my_role() <> 'admin' then
+    new.role := old.role;
+    new.is_approved := old.is_approved;
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists protect_profile_fields on public.profiles;
+create trigger protect_profile_fields before update on public.profiles
+  for each row execute procedure public.protect_profile_fields();
+
 create or replace function public.handle_new_user()
 returns trigger language plpgsql security definer as $$
 begin
@@ -349,6 +377,7 @@ create policy "reviews: admin all" on public.reviews
 -- ============================================================
 create table if not exists public.hall_rental_requests (
   id                uuid primary key default gen_random_uuid(),
+  hall              text,  -- 'small' | 'big' — какой зал бронируют
   name              text not null,
   phone             text not null,
   email             text not null,
@@ -359,6 +388,9 @@ create table if not exists public.hall_rental_requests (
   created_at        timestamptz not null default now(),
   updated_at        timestamptz not null default now()
 );
+
+-- миграция существующей таблицы (create table if not exists её не меняет)
+alter table public.hall_rental_requests add column if not exists hall text;
 
 alter table public.hall_rental_requests enable row level security;
 
@@ -371,13 +403,126 @@ create policy "hall: admin all" on public.hall_rental_requests
   for all using (public.get_my_role() = 'admin');
 
 -- ============================================================
+-- 10. individual_bookings — индивидуальная запись на свободный слот (75 мин)
+-- ============================================================
+create table if not exists public.individual_bookings (
+  id          uuid        primary key default gen_random_uuid(),
+  user_id     uuid        not null references public.profiles(id) on delete cascade,
+  starts_at   timestamptz not null,
+  ends_at     timestamptz not null,
+  -- pending = заявка в обработке (ждёт подтверждения админа)
+  status      text        not null default 'pending' check (status in ('pending', 'confirmed', 'cancelled')),
+  notes       text,
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now(),
+  constraint ind_ends_after_starts check (ends_at > starts_at)
+);
+
+-- Миграция уже существующей таблицы к статусу 'pending' (если создавалась раньше).
+-- create table if not exists выше не меняет существующую таблицу — поэтому правим явно.
+alter table public.individual_bookings alter column status set default 'pending';
+alter table public.individual_bookings drop constraint if exists individual_bookings_status_check;
+alter table public.individual_bookings
+  add constraint individual_bookings_status_check check (status in ('pending', 'confirmed', 'cancelled'));
+
+create index if not exists individual_bookings_starts_at_idx on public.individual_bookings(starts_at);
+-- активный слот (заявка или подтверждённая) может занять только один человек
+drop index if exists public.individual_bookings_slot_unique;
+create unique index if not exists individual_bookings_slot_unique
+  on public.individual_bookings(starts_at) where (status <> 'cancelled');
+
+alter table public.individual_bookings enable row level security;
+
+-- активные слоты видны всем (чтобы не записаться на одно время)
+drop policy if exists "ind: public read confirmed" on public.individual_bookings;
+create policy "ind: public read confirmed" on public.individual_bookings
+  for select using (status <> 'cancelled' or auth.uid() = user_id or public.get_my_role() = 'admin');
+
+drop policy if exists "ind: user insert own" on public.individual_bookings;
+create policy "ind: user insert own" on public.individual_bookings
+  for insert with check (auth.uid() = user_id);
+
+drop policy if exists "ind: user update own" on public.individual_bookings;
+create policy "ind: user update own" on public.individual_bookings
+  for update using (auth.uid() = user_id);
+
+drop policy if exists "ind: admin all" on public.individual_bookings;
+create policy "ind: admin all" on public.individual_bookings
+  for all using (public.get_my_role() = 'admin');
+
+-- ============================================================
+-- 11. class_bookings — запись на ГРУППОВОЕ занятие из расписания
+-- ============================================================
+create table if not exists public.class_bookings (
+  id          uuid        primary key default gen_random_uuid(),
+  user_id     uuid        not null references public.profiles(id) on delete cascade,
+  starts_at   timestamptz not null,   -- конкретное занятие: дата + время из расписания
+  kind        text,                   -- 'groupRu' | 'groupRo' (язык занятия)
+  status      text        not null default 'confirmed' check (status in ('confirmed', 'cancelled')),
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now(),
+  -- один человек — одна запись на конкретное занятие
+  constraint one_class_booking_per_user unique (user_id, starts_at)
+);
+
+create index if not exists class_bookings_starts_at_idx on public.class_bookings(starts_at);
+
+alter table public.class_bookings enable row level security;
+
+-- активные записи видны всем (чтобы считать занятые места)
+drop policy if exists "class_bk: read active" on public.class_bookings;
+create policy "class_bk: read active" on public.class_bookings
+  for select using (status <> 'cancelled' or auth.uid() = user_id or public.get_my_role() = 'admin');
+
+-- записаться может только ОДОБРЕННЫЙ клиент (или персонал)
+drop policy if exists "class_bk: user insert own" on public.class_bookings;
+create policy "class_bk: user insert own" on public.class_bookings
+  for insert with check (
+    auth.uid() = user_id
+    and (public.is_approved() or public.get_my_role() in ('admin', 'trainer'))
+  );
+
+drop policy if exists "class_bk: user update own" on public.class_bookings;
+create policy "class_bk: user update own" on public.class_bookings
+  for update using (auth.uid() = user_id);
+
+drop policy if exists "class_bk: admin all" on public.class_bookings;
+create policy "class_bk: admin all" on public.class_bookings
+  for all using (public.get_my_role() = 'admin');
+
+-- ============================================================
+-- 12. individual_requests — заявка на ИНДИВИДУАЛЬНОЕ занятие (обратный звонок)
+-- ============================================================
+create table if not exists public.individual_requests (
+  id          uuid        primary key default gen_random_uuid(),
+  name        text,
+  phone       text        not null,
+  comment     text,       -- пожелания: время, количество человек и т.п.
+  status      text        not null default 'new' check (status in ('new', 'contacted', 'done', 'declined')),
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now()
+);
+
+alter table public.individual_requests enable row level security;
+
+-- любой может оставить заявку (без входа)
+drop policy if exists "ind_req: public insert" on public.individual_requests;
+create policy "ind_req: public insert" on public.individual_requests
+  for insert with check (true);
+
+drop policy if exists "ind_req: admin all" on public.individual_requests;
+create policy "ind_req: admin all" on public.individual_requests
+  for all using (public.get_my_role() = 'admin');
+
+-- ============================================================
 -- updated_at triggers
 -- ============================================================
 do $$
 declare t text;
 begin
   foreach t in array array['profiles','trainers','classes','schedule','bookings',
-                           'subscription_plans','subscriptions','reviews','hall_rental_requests']
+                           'subscription_plans','subscriptions','reviews','hall_rental_requests',
+                           'individual_bookings','class_bookings','individual_requests']
   loop
     execute format('drop trigger if exists set_updated_at on public.%I', t);
     execute format('create trigger set_updated_at before update on public.%I

@@ -216,7 +216,7 @@
     },
     "individual": {
       "eyebrow": "Individual sessions",
-      "title": "Personal training",
+      "title": "Individual training",
       "description": "One-on-one session with a trainer tailored to your goals and level. Leave your number — the administrator will call you back, help choose a convenient time and answer your questions.",
       "points": {
         "a": "A program tailored to your goals and ability",
@@ -259,6 +259,7 @@
     "eyebrow": "Our space",
     "title": "Studio gallery",
     "subtitle": "Take a look inside the studio — the halls, kitchen and all the amenities.",
+    "tapHint": "Tap the photo to browse",
     "categories": {
       "hallBig": "Large hall",
       "hallSmall": "Small hall",

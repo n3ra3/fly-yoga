@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 
 /**
@@ -18,6 +18,12 @@ export function Photo({
   imgClassName?: string
 }) {
   const [failed, setFailed] = useState(false)
+
+  // сбрасываем ошибку при смене src (иначе плейсхолдер «залипал» на всех
+  // следующих фото при переиспользовании компонента — например в галерее)
+  useEffect(() => {
+    setFailed(false)
+  }, [src])
 
   return (
     <div className={cn('relative overflow-hidden bg-secondary', className)}>

@@ -73,8 +73,35 @@ export function ServicesPage() {
         </div>
       </section>
 
-      {/* ── Групповые занятия → расписание ── */}
+      {/* ── Индивидуальные занятия → заявка на звонок ── */}
       <section className="pb-16 md:pb-20">
+        <div className="container-yoga grid gap-10 lg:grid-cols-[1fr_420px] lg:gap-14">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              {t('services.individual.eyebrow')}
+            </p>
+            <h2 className="mt-3 font-display text-3xl leading-tight tracking-tight sm:text-4xl">
+              {t('services.individual.title')}
+            </h2>
+            <p className="mt-5 max-w-xl leading-relaxed text-muted-foreground">
+              {t('services.individual.description')}
+            </p>
+            <ul className="mt-7 flex flex-col gap-3">
+              {['a', 'b', 'c'].map((k) => (
+                <li key={k} className="flex items-start gap-2.5 text-sm text-foreground/80">
+                  <Check size={16} className="mt-0.5 shrink-0 text-primary" />
+                  {t(`services.individual.points.${k}`)}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <CallbackForm />
+        </div>
+      </section>
+
+      {/* ── Групповые занятия → расписание ── */}
+      <section className="pb-16 md:pb-24">
         <div className="container-yoga">
           <div className="grid items-center gap-8 overflow-hidden rounded-3xl border border-border bg-secondary/40 p-8 md:grid-cols-2 md:p-12">
             <div>
@@ -102,33 +129,6 @@ export function ServicesPage() {
               ))}
             </ul>
           </div>
-        </div>
-      </section>
-
-      {/* ── Индивидуальные занятия → заявка на звонок ── */}
-      <section className="pb-16 md:pb-24">
-        <div className="container-yoga grid gap-10 lg:grid-cols-[1fr_420px] lg:gap-14">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              {t('services.individual.eyebrow')}
-            </p>
-            <h2 className="mt-3 font-display text-3xl leading-tight tracking-tight sm:text-4xl">
-              {t('services.individual.title')}
-            </h2>
-            <p className="mt-5 max-w-xl leading-relaxed text-muted-foreground">
-              {t('services.individual.description')}
-            </p>
-            <ul className="mt-7 flex flex-col gap-3">
-              {['a', 'b', 'c'].map((k) => (
-                <li key={k} className="flex items-start gap-2.5 text-sm text-foreground/80">
-                  <Check size={16} className="mt-0.5 shrink-0 text-primary" />
-                  {t(`services.individual.points.${k}`)}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <CallbackForm />
         </div>
       </section>
 

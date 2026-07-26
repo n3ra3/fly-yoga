@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 
 import { AuthProvider } from '@/contexts/AuthContext'
 import { LotusBackground } from '@/components/LotusBackground'
+import { ScrollToTop } from '@/components/ScrollToTop'
 import { PublicLayout } from '@/layouts/PublicLayout'
 import { DashboardLayout } from '@/layouts/DashboardLayout'
 import { AdminLayout } from '@/layouts/AdminLayout'
@@ -30,6 +31,8 @@ export function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        {/* Прокрутка наверх при переходе между страницами */}
+        <ScrollToTop />
         {/* Декоративный лотос на фоне — виден на всех страницах */}
         <LotusBackground />
         <Suspense fallback={null}>

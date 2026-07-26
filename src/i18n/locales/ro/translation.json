@@ -216,7 +216,7 @@
     },
     "individual": {
       "eyebrow": "Ședințe individuale",
-      "title": "Antrenament personal",
+      "title": "Antrenament individual",
       "description": "Ședință unu la unu cu antrenorul, adaptată obiectivelor și nivelului tău. Lasă numărul — administratorul te va suna, te va ajuta să alegi o oră convenabilă și va răspunde la întrebări.",
       "points": {
         "a": "Program adaptat obiectivelor și posibilităților tale",
@@ -259,6 +259,7 @@
     "eyebrow": "Spațiul nostru",
     "title": "Galeria studioului",
     "subtitle": "Vezi cum arată studioul din interior — sălile, bucătăria și toate facilitățile.",
+    "tapHint": "Apasă pe fotografie pentru a naviga",
     "categories": {
       "hallBig": "Sala mare",
       "hallSmall": "Sala mică",

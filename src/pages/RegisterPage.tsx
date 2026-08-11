@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, MailCheck, Loader2, ArrowLeft } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { Logo } from '@/components/Logo'
+import { CodeInput } from '@/components/CodeInput'
 
 export function RegisterPage() {
   const { t } = useTranslation()
-  const { signUp, session } = useAuth()
+  const { signUp, verifyCode, resendCode, session } = useAuth()
   const navigate = useNavigate()
 
   const [form, setForm] = useState({
@@ -20,7 +21,7 @@ export function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [exists, setExists] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const [codeStep, setCodeStep] = useState(false)
   const [loading, setLoading] = useState(false)
 
   if (session) return <Navigate to="/dashboard" replace />
@@ -56,25 +57,19 @@ export function RegisterPage() {
       navigate('/dashboard')
       return
     }
-    // подтверждение включено — показываем экран «проверьте почту»
-    setSuccess(true)
+    // подтверждение включено — показываем экран ввода кода из письма
+    setCodeStep(true)
   }
 
-  if (success) {
+  if (codeStep) {
     return (
-      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
-        <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <div className="mb-3 text-4xl">✉️</div>
-          <h2 className="text-xl font-semibold">{t('auth.register.checkEmail')}</h2>
-          <p className="mt-2 text-sm text-muted-foreground">{t('auth.register.success')}</p>
-          <Link
-            to="/login"
-            className="mt-6 inline-block rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
-          >
-            {t('auth.register.login')}
-          </Link>
-        </div>
-      </div>
+      <CodeStep
+        email={form.email}
+        onVerify={verifyCode}
+        onResend={resendCode}
+        onDone={() => navigate('/dashboard')}
+        onBack={() => setCodeStep(false)}
+      />
     )
   }
 
@@ -207,6 +202,102 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
     <div className="flex flex-col gap-1.5">
       <label className="text-sm font-medium text-foreground">{label}</label>
       {children}
+    </div>
+  )
+}
+
+function CodeStep({
+  email,
+  onVerify,
+  onResend,
+  onDone,
+  onBack,
+}: {
+  email: string
+  onVerify: (email: string, code: string) => Promise<{ error: string | null }>
+  onResend: (email: string) => Promise<{ error: string | null }>
+  onDone: () => void
+  onBack: () => void
+}) {
+  const { t } = useTranslation()
+  const [code, setCode] = useState('')
+  const [verifying, setVerifying] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [resent, setResent] = useState(false)
+
+  async function verify(value: string) {
+    if (verifying) return
+    setError(null)
+    setVerifying(true)
+    const { error } = await onVerify(email, value)
+    setVerifying(false)
+    if (error) setError(t('auth.code.wrong'))
+    else onDone()
+  }
+
+  async function resend() {
+    setError(null)
+    setResent(false)
+    const { error } = await onResend(email)
+    if (error) setError(error)
+    else setResent(true)
+  }
+
+  return (
+    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4 py-12">
+      <div className="w-full max-w-sm">
+        <div className="mb-8 flex flex-col items-center gap-4">
+          <Logo variant="dark" showText imgClassName="h-16 w-16" />
+        </div>
+
+        <div className="rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+            <MailCheck size={26} />
+          </div>
+          <h1 className="text-xl font-semibold tracking-tight">{t('auth.code.title')}</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {t('auth.code.subtitle')} <span className="font-medium text-foreground">{email}</span>
+          </p>
+
+          <div className="mt-7">
+            <CodeInput
+              onChange={(c) => {
+                setCode(c)
+                setError(null)
+              }}
+              onComplete={verify}
+              disabled={verifying}
+            />
+          </div>
+
+          {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
+          {resent && !error && <p className="mt-4 text-sm text-primary">{t('auth.code.resent')}</p>}
+
+          <button
+            onClick={() => verify(code)}
+            disabled={verifying || code.length < 6}
+            className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary py-3 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-md disabled:opacity-50"
+          >
+            {verifying ? <Loader2 size={16} className="animate-spin" /> : null}
+            {t('auth.code.submit')}
+          </button>
+
+          <button
+            onClick={resend}
+            disabled={verifying}
+            className="mt-4 text-sm text-muted-foreground transition-colors hover:text-primary disabled:opacity-50"
+          >
+            {t('auth.code.resend')}
+          </button>
+        </div>
+
+        <button
+          onClick={onBack}
+          className="mt-6 inline-flex w-full items-center justify-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ArrowLeft size={14} /> {t('auth.code.back')}
+        </button>
+      </div>
     </div>
   )
 }

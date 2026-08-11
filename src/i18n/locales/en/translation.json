@@ -351,8 +351,16 @@
       "success": "We sent a confirmation link to your email address.",
       "error": "Registration failed. Please try again.",
       "exists": "An account with this email already exists.",
-      "goToLogin": "Go to login",
-      "approvalNote": "After registration, booking classes becomes available once approved by an administrator."
+      "goToLogin": "Go to login"
+    },
+    "code": {
+      "title": "Confirm your email",
+      "subtitle": "We've sent a 6-digit code to",
+      "submit": "Confirm",
+      "resend": "Resend code",
+      "resent": "Code sent again",
+      "wrong": "Invalid or expired code",
+      "back": "Back to registration"
     },
     "resetPassword": {
       "title": "Reset Password",

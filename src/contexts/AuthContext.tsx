@@ -15,6 +15,10 @@ interface AuthContextValue {
   trainerId: string | null
   signIn: (email: string, password: string) => Promise<{ error: string | null }>
   signUp: (params: SignUpParams) => Promise<SignUpResult>
+  /** подтверждение регистрации 6-значным кодом из письма */
+  verifyCode: (email: string, code: string) => Promise<{ error: string | null }>
+  /** повторно отправить код на почту */
+  resendCode: (email: string) => Promise<{ error: string | null }>
   signOut: () => Promise<void>
   resetPassword: (email: string) => Promise<{ error: string | null }>
   refreshProfile: () => Promise<void>
@@ -118,6 +122,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: null, alreadyExists, hasSession: !!data.session }
   }
 
+  async function verifyCode(email: string, code: string) {
+    const { error } = await supabase.auth.verifyOtp({ email, token: code, type: 'signup' })
+    return { error: error?.message ?? null }
+  }
+
+  async function resendCode(email: string) {
+    const { error } = await supabase.auth.resend({ type: 'signup', email })
+    return { error: error?.message ?? null }
+  }
+
   async function signOut() {
     await supabase.auth.signOut()
   }
@@ -144,6 +158,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         trainerId,
         signIn,
         signUp,
+        verifyCode,
+        resendCode,
         signOut,
         resetPassword,
         refreshProfile,

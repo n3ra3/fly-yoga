@@ -351,8 +351,16 @@
       "success": "Am trimis un link de confirmare la adresa ta de email.",
       "error": "Eroare la înregistrare. Încercați din nou.",
       "exists": "Un cont cu acest email există deja.",
-      "goToLogin": "Mergi la conectare",
-      "approvalNote": "După înregistrare, rezervarea ședințelor devine disponibilă după aprobarea de către administrator."
+      "goToLogin": "Mergi la conectare"
+    },
+    "code": {
+      "title": "Confirmă emailul",
+      "subtitle": "Am trimis un cod din 6 cifre la",
+      "submit": "Confirmă",
+      "resend": "Retrimite codul",
+      "resent": "Codul a fost retrimis",
+      "wrong": "Cod invalid sau expirat",
+      "back": "Înapoi la înregistrare"
     },
     "resetPassword": {
       "title": "Resetare parolă",

@@ -46,25 +46,18 @@ create table if not exists public.profiles (
 
 create index if not exists profiles_role_idx on public.profiles(role);
 
--- Одобрение клиента админом. Новые пользователи — false (не могут записываться),
--- пока администратор не подтвердит. Персонал (admin/trainer) одобряется автоматически.
-alter table public.profiles add column if not exists is_approved boolean not null default false;
-update public.profiles set is_approved = true where role in ('admin', 'trainer') and is_approved = false;
+-- Подтверждение аккаунтов админом УБРАНО — регистрация сразу активна.
+-- Удаляем флаг одобрения и его функцию, если остались от прошлой версии.
+-- cascade заодно снимает зависимую политику записи (её пересоздаём ниже уже без проверки).
+drop function if exists public.is_approved() cascade;
+alter table public.profiles drop column if exists is_approved;
 
--- Возвращает, одобрен ли текущий пользователь.
-create or replace function public.is_approved()
-returns boolean language sql stable security definer as $$
-  select coalesce(is_approved, false) from public.profiles where id = auth.uid();
-$$;
-
--- Защита: обычный пользователь не может сам поменять свою роль или одобрение.
--- Только админ вправе менять поля role и is_approved.
+-- Защита: обычный пользователь не может сам поменять свою роль (напр. стать админом).
 create or replace function public.protect_profile_fields()
 returns trigger language plpgsql security definer as $$
 begin
   if public.get_my_role() <> 'admin' then
     new.role := old.role;
-    new.is_approved := old.is_approved;
   end if;
   return new;
 end;
@@ -474,13 +467,9 @@ drop policy if exists "class_bk: read active" on public.class_bookings;
 create policy "class_bk: read active" on public.class_bookings
   for select using (status <> 'cancelled' or auth.uid() = user_id or public.get_my_role() = 'admin');
 
--- записаться может только ОДОБРЕННЫЙ клиент (или персонал)
 drop policy if exists "class_bk: user insert own" on public.class_bookings;
 create policy "class_bk: user insert own" on public.class_bookings
-  for insert with check (
-    auth.uid() = user_id
-    and (public.is_approved() or public.get_my_role() in ('admin', 'trainer'))
-  );
+  for insert with check (auth.uid() = user_id);
 
 drop policy if exists "class_bk: user update own" on public.class_bookings;
 create policy "class_bk: user update own" on public.class_bookings

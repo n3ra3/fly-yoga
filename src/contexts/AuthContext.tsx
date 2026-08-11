@@ -11,8 +11,6 @@ interface AuthContextValue {
   role: UserRole
   isAdmin: boolean
   isTrainer: boolean
-  /** одобрен ли клиент администратором (может ли записываться) */
-  isApproved: boolean
   /** id карточки тренера (trainers.id), если пользователь — тренер */
   trainerId: string | null
   signIn: (email: string, password: string) => Promise<{ error: string | null }>
@@ -143,7 +141,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         role: (profile?.role ?? 'user') as UserRole,
         isAdmin: profile?.role === 'admin',
         isTrainer: profile?.role === 'trainer',
-        isApproved: !!profile?.is_approved || profile?.role === 'admin' || profile?.role === 'trainer',
         trainerId,
         signIn,
         signUp,

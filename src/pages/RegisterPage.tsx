@@ -188,10 +188,6 @@ export function RegisterPage() {
             >
               {loading ? t('common.loading') : t('auth.register.submit')}
             </button>
-
-            <p className="text-center text-xs leading-relaxed text-muted-foreground">
-              {t('auth.register.approvalNote')}
-            </p>
           </form>
         </div>
 

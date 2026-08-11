@@ -10,7 +10,6 @@ export interface Database {
           last_name: string
           phone: string | null
           role: 'user' | 'trainer' | 'admin'
-          is_approved: boolean
           avatar_url: string | null
           created_at: string
           updated_at: string
@@ -21,7 +20,6 @@ export interface Database {
           last_name: string
           phone?: string | null
           role?: 'user' | 'trainer' | 'admin'
-          is_approved?: boolean
           avatar_url?: string | null
           created_at?: string
           updated_at?: string
@@ -31,7 +29,6 @@ export interface Database {
           last_name?: string
           phone?: string | null
           role?: 'user' | 'trainer' | 'admin'
-          is_approved?: boolean
           avatar_url?: string | null
           updated_at?: string
         }

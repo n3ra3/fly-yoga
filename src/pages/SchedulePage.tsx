@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ChevronLeft, ChevronRight, Check, Users, Hourglass } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Check, Users } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { useAuth } from '@/contexts/AuthContext'
 import { cn } from '@/lib/utils'
@@ -58,7 +58,7 @@ function classDate(day: Date, time: string) {
 
 export function SchedulePage() {
   const { t, i18n } = useTranslation()
-  const { user, session, isApproved } = useAuth()
+  const { user, session } = useAuth()
   const locale = LOCALES[i18n.language] ?? 'ru-RU'
   const now = new Date()
 
@@ -155,14 +155,6 @@ export function SchedulePage() {
           <LegendDot className="bg-emerald-500" label={t('schedule.week.yourBooking')} />
         </div>
 
-        {/* Баннер: аккаунт ещё не одобрен */}
-        {session && !isApproved && (
-          <div className="mt-5 flex items-start gap-3 rounded-2xl border border-yellow-300 bg-yellow-50 px-4 py-3 text-sm text-yellow-800">
-            <Hourglass size={18} className="mt-0.5 shrink-0" />
-            <p>{t('schedule.notApprovedBanner')}</p>
-          </div>
-        )}
-
         {/* Недельная сетка */}
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
           {days.map((day) => {
@@ -245,13 +237,6 @@ export function SchedulePage() {
                             >
                               {t('nav.login')}
                             </Link>
-                          ) : !isApproved ? (
-                            <p
-                              title={t('schedule.notApprovedHint')}
-                              className="whitespace-nowrap rounded-full bg-yellow-100 px-2 py-1.5 text-center text-xs font-medium text-yellow-700"
-                            >
-                              {t('schedule.notApproved')}
-                            </p>
                           ) : isFull ? (
                             <div className="flex w-full items-center justify-center whitespace-nowrap rounded-full bg-muted px-2 py-1.5 text-xs font-medium text-muted-foreground">
                               {t('schedule.full')}

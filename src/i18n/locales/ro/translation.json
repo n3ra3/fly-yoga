@@ -242,8 +242,9 @@
       "description": "Lasă o cerere — administratorul te va suna, va alege o oră convenabilă și va răspunde la întrebări. Alege ce te interesează.",
       "chooseService": "Ce te interesează?",
       "service": {
-        "individual": "Individual",
-        "group": "În grup"
+        "trial": "De probă",
+        "group": "În grup",
+        "individual": "Individual"
       },
       "points": {
         "a": "Ședințe individuale și de grup",

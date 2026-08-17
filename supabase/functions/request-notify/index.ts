@@ -12,8 +12,9 @@ const SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 const WEBHOOK_SECRET = Deno.env.get('WEBHOOK_SECRET') ?? ''
 
 const SERVICE_LABEL: Record<string, string> = {
-  individual: 'Индивидуальная',
+  trial: 'Пробное (группа)',
   group: 'Групповая',
+  individual: 'Индивидуальная',
 }
 const STATUS_LABEL: Record<string, string> = {
   new: '🟡 Новая',

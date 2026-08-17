@@ -23,6 +23,8 @@ import { FEATURES as FLAGS } from '@/config/features'
 
 /** Куда ведёт кнопка призыва: пока расписание скрыто — на форму звонка */
 const CTA_TO = FLAGS.schedule ? '/schedule' : '/services#call'
+/** Кнопки «пробное» — сразу подставляют вариант «Пробное» в форме */
+const CTA_TRIAL = FLAGS.schedule ? '/schedule' : '/services?service=trial#call'
 
 const FEATURES = [
   { key: 'body', Icon: Leaf },
@@ -86,7 +88,7 @@ export function HomePage() {
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link
-                to={CTA_TO}
+                to={CTA_TRIAL}
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg"
               >
                 {t('home.hero.cta')}
@@ -217,7 +219,7 @@ export function HomePage() {
               ))}
             </ul>
             <Link
-              to={CTA_TO}
+              to={CTA_TRIAL}
               className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg"
             >
               {t('home.trial.cta')}

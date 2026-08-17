@@ -242,8 +242,9 @@
       "description": "Leave a request — the administrator will call you back, pick a convenient time and answer your questions. Choose what you're interested in.",
       "chooseService": "What are you interested in?",
       "service": {
-        "individual": "Individual",
-        "group": "Group"
+        "trial": "Trial",
+        "group": "Group",
+        "individual": "Individual"
       },
       "points": {
         "a": "Individual and group sessions",

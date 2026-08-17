@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowRight, Check, Users, Maximize, CalendarDays, Phone, Loader2, CheckCircle2 } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
@@ -24,6 +24,8 @@ const HALLS = [
 
 export function ServicesPage() {
   const { t } = useTranslation()
+  const [params] = useSearchParams()
+  const preselect = params.get('service') // напр. ?service=trial
 
   return (
     <div>
@@ -97,7 +99,7 @@ export function ServicesPage() {
             </ul>
           </div>
 
-          <CallbackForm />
+          <CallbackForm initial={preselect} />
         </div>
       </section>
 
@@ -180,12 +182,14 @@ export function ServicesPage() {
   )
 }
 
-const SERVICES = ['individual', 'group'] as const
+const SERVICES = ['trial', 'group', 'individual'] as const
 type ServiceKind = (typeof SERVICES)[number]
 
-function CallbackForm() {
+function CallbackForm({ initial }: { initial?: string | null }) {
   const { t } = useTranslation()
-  const [service, setService] = useState<ServiceKind>('individual')
+  const [service, setService] = useState<ServiceKind>(
+    (SERVICES as readonly string[]).includes(initial ?? '') ? (initial as ServiceKind) : 'trial',
+  )
   const [form, setForm] = useState({ name: '', phone: '', comment: '' })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -232,14 +236,14 @@ function CallbackForm() {
       {/* Что интересует: индивидуальная или групповая */}
       <div>
         <label className="mb-2 block text-sm font-medium">{t('services.book.chooseService')}</label>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="flex flex-wrap gap-2">
           {SERVICES.map((s) => (
             <button
               key={s}
               type="button"
               onClick={() => setService(s)}
               className={cn(
-                'rounded-xl border px-3 py-2.5 text-sm font-medium transition-colors',
+                'rounded-full border px-4 py-2 text-sm font-medium transition-colors',
                 service === s
                   ? 'border-primary bg-primary/5 text-primary ring-1 ring-primary/30'
                   : 'border-border text-foreground/70 hover:border-primary/40',

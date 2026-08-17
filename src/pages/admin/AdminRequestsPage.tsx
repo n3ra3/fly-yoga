@@ -44,6 +44,7 @@ export function AdminRequestsPage() {
   const filtered = tab === 'new' ? items.filter((r) => r.status === 'new') : items
 
   function serviceLabel(s: string | null) {
+    if (s === 'trial') return t('services.book.service.trial')
     if (s === 'group') return t('services.book.service.group')
     if (s === 'individual') return t('services.book.service.individual')
     return '—'

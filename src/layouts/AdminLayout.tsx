@@ -12,6 +12,7 @@ export function AdminLayout() {
 
   const links = [
     { to: '/admin', label: t('admin.dashboard.nav'), end: true },
+    { to: '/admin/requests', label: t('admin.requests') },
     { to: '/admin/trainers', label: t('admin.trainers') },
   ]
 

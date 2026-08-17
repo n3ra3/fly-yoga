@@ -236,6 +236,21 @@
         "error": "Something went wrong. Please try again."
       }
     },
+    "book": {
+      "eyebrow": "Booking",
+      "title": "Book a session",
+      "description": "Leave a request — the administrator will call you back, pick a convenient time and answer your questions. Choose what you're interested in.",
+      "chooseService": "What are you interested in?",
+      "service": {
+        "individual": "Individual",
+        "group": "Group"
+      },
+      "points": {
+        "a": "Individual and group sessions",
+        "b": "Convenient time by arrangement",
+        "c": "For any fitness level"
+      }
+    },
     "rental": {
       "eyebrow": "Rental",
       "title": "Hall rental",
@@ -406,7 +421,26 @@
   "admin": {
     "title": "Admin Panel",
     "clients": "Clients",
+    "requests": "Requests",
     "trainers": "Trainers",
+    "requestsPage": {
+      "title": "Call requests",
+      "subtitle": "Client requests from the site. Call them and mark the status.",
+      "new": "New",
+      "all": "All",
+      "noName": "No name",
+      "noNew": "No new requests",
+      "empty": "No requests yet",
+      "markContacted": "Called",
+      "markDone": "Done",
+      "reopen": "Back to new",
+      "status": {
+        "new": "New",
+        "contacted": "Called",
+        "done": "Done",
+        "declined": "Declined"
+      }
+    },
     "clientsPage": {
       "title": "Clients",
       "subtitle": "Approve new clients — only then can they book classes.",

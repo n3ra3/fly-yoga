@@ -19,6 +19,10 @@ import { Photo } from '@/components/Photo'
 import { ReviewsCarousel } from '@/components/ReviewsCarousel'
 import { reviews } from '@/data/reviews'
 import { getSlotGroups, type GroupKind, type ScheduleCategory } from '@/data/schedule'
+import { FEATURES as FLAGS } from '@/config/features'
+
+/** Куда ведёт кнопка призыва: пока расписание скрыто — на форму звонка */
+const CTA_TO = FLAGS.schedule ? '/schedule' : '/services#call'
 
 const FEATURES = [
   { key: 'body', Icon: Leaf },
@@ -82,7 +86,7 @@ export function HomePage() {
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link
-                to="/schedule"
+                to={CTA_TO}
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg"
               >
                 {t('home.hero.cta')}
@@ -120,7 +124,8 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ── Направления ── */}
+      {/* ── Направления (скрыто, пока расписание отключено) ── */}
+      {FLAGS.schedule && (
       <section className="section-padding">
         <div className="container-yoga grid gap-10 lg:grid-cols-[280px_1fr] lg:gap-12">
           <div>
@@ -184,6 +189,7 @@ export function HomePage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* ── Пробное занятие (фото слева, текст справа — мозаика) ── */}
       <section className="pb-16 md:pb-24">
@@ -211,7 +217,7 @@ export function HomePage() {
               ))}
             </ul>
             <Link
-              to="/schedule"
+              to={CTA_TO}
               className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg"
             >
               {t('home.trial.cta')}
@@ -275,7 +281,7 @@ export function HomePage() {
                 {t('home.cta.description')}
               </p>
               <Link
-                to="/schedule"
+                to={CTA_TO}
                 className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-medium text-primary transition-all hover:bg-white/90 hover:shadow-lg"
               >
                 {t('home.cta.button')}

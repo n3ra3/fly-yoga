@@ -236,6 +236,21 @@
         "error": "A apărut o eroare. Încearcă din nou."
       }
     },
+    "book": {
+      "eyebrow": "Rezervare",
+      "title": "Rezervă o ședință",
+      "description": "Lasă o cerere — administratorul te va suna, va alege o oră convenabilă și va răspunde la întrebări. Alege ce te interesează.",
+      "chooseService": "Ce te interesează?",
+      "service": {
+        "individual": "Individual",
+        "group": "În grup"
+      },
+      "points": {
+        "a": "Ședințe individuale și de grup",
+        "b": "Oră convenabilă prin înțelegere",
+        "c": "Pentru orice nivel de pregătire"
+      }
+    },
     "rental": {
       "eyebrow": "Închiriere",
       "title": "Închiriere sală",
@@ -406,7 +421,26 @@
   "admin": {
     "title": "Panou de administrare",
     "clients": "Clienți",
+    "requests": "Cereri",
     "trainers": "Instructori",
+    "requestsPage": {
+      "title": "Cereri de apel",
+      "subtitle": "Cererile clienților de pe site. Sună-i și marchează statusul.",
+      "new": "Noi",
+      "all": "Toate",
+      "noName": "Fără nume",
+      "noNew": "Nu sunt cereri noi",
+      "empty": "Nu sunt cereri încă",
+      "markContacted": "Am sunat",
+      "markDone": "Gata",
+      "reopen": "Înapoi la noi",
+      "status": {
+        "new": "Nouă",
+        "contacted": "Sunat",
+        "done": "Gata",
+        "declined": "Respinsă"
+      }
+    },
     "clientsPage": {
       "title": "Clienți",
       "subtitle": "Aprobă clienții noi — abia atunci vor putea rezerva ședințe.",

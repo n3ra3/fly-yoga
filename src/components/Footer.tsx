@@ -43,7 +43,9 @@ export function Footer() {
 
           {/* Nav links */}
           <nav className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-muted-foreground">
-            <Link to="/schedule" className="hover:text-foreground transition-colors">{t('nav.schedule')}</Link>
+            {FEATURES.schedule && (
+              <Link to="/schedule" className="hover:text-foreground transition-colors">{t('nav.schedule')}</Link>
+            )}
             {FEATURES.trainers && (
               <Link to="/trainers" className="hover:text-foreground transition-colors">{t('nav.trainers')}</Link>
             )}

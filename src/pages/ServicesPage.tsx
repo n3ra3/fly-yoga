@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowRight, Check, Users, Maximize, CalendarDays, Phone, Loader2, CheckCircle2 } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
+import { cn } from '@/lib/utils'
 import { Photo } from '@/components/Photo'
 import { PhotoStrip } from '@/components/PhotoStrip'
 import { FEATURES } from '@/config/features'
@@ -73,24 +74,24 @@ export function ServicesPage() {
         </div>
       </section>
 
-      {/* ── Индивидуальные занятия → заявка на звонок ── */}
-      <section className="pb-16 md:pb-20">
+      {/* ── Записаться (заявка на звонок, выбор индивидуальная/групповая) ── */}
+      <section id="call" className="scroll-mt-24 pb-16 md:pb-20">
         <div className="container-yoga grid gap-10 lg:grid-cols-[1fr_420px] lg:gap-14">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              {t('services.individual.eyebrow')}
+              {t('services.book.eyebrow')}
             </p>
             <h2 className="mt-3 font-display text-3xl leading-tight tracking-tight sm:text-4xl">
-              {t('services.individual.title')}
+              {t('services.book.title')}
             </h2>
             <p className="mt-5 max-w-xl leading-relaxed text-muted-foreground">
-              {t('services.individual.description')}
+              {t('services.book.description')}
             </p>
             <ul className="mt-7 flex flex-col gap-3">
               {['a', 'b', 'c'].map((k) => (
                 <li key={k} className="flex items-start gap-2.5 text-sm text-foreground/80">
                   <Check size={16} className="mt-0.5 shrink-0 text-primary" />
-                  {t(`services.individual.points.${k}`)}
+                  {t(`services.book.points.${k}`)}
                 </li>
               ))}
             </ul>
@@ -100,7 +101,8 @@ export function ServicesPage() {
         </div>
       </section>
 
-      {/* ── Групповые занятия → расписание ── */}
+      {/* ── Групповые занятия → расписание (скрыто, пока расписание отключено) ── */}
+      {FEATURES.schedule && (
       <section className="pb-16 md:pb-24">
         <div className="container-yoga">
           <div className="grid items-center gap-8 overflow-hidden rounded-3xl border border-border bg-secondary/40 p-8 md:grid-cols-2 md:p-12">
@@ -131,6 +133,7 @@ export function ServicesPage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* ── Аренда зала (временно скрыт, см. config/features.ts) ── */}
       {FEATURES.hallRental && (
@@ -177,8 +180,12 @@ export function ServicesPage() {
   )
 }
 
+const SERVICES = ['individual', 'group'] as const
+type ServiceKind = (typeof SERVICES)[number]
+
 function CallbackForm() {
   const { t } = useTranslation()
+  const [service, setService] = useState<ServiceKind>('individual')
   const [form, setForm] = useState({ name: '', phone: '', comment: '' })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -193,6 +200,7 @@ function CallbackForm() {
     setError(null)
     setLoading(true)
     const { error } = await supabase.from('individual_requests').insert({
+      service,
       name: form.name || null,
       phone: form.phone,
       comment: form.comment || null,
@@ -219,6 +227,28 @@ function CallbackForm() {
       <div className="flex items-center gap-2 text-primary">
         <Phone size={18} />
         <h3 className="font-medium text-foreground">{t('services.individual.form.title')}</h3>
+      </div>
+
+      {/* Что интересует: индивидуальная или групповая */}
+      <div>
+        <label className="mb-2 block text-sm font-medium">{t('services.book.chooseService')}</label>
+        <div className="grid grid-cols-2 gap-2">
+          {SERVICES.map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => setService(s)}
+              className={cn(
+                'rounded-xl border px-3 py-2.5 text-sm font-medium transition-colors',
+                service === s
+                  ? 'border-primary bg-primary/5 text-primary ring-1 ring-primary/30'
+                  : 'border-border text-foreground/70 hover:border-primary/40',
+              )}
+            >
+              {t(`services.book.service.${s}`)}
+            </button>
+          ))}
+        </div>
       </div>
 
       <Field label={`${t('services.individual.form.name')} (${t('common.optional')})`}>

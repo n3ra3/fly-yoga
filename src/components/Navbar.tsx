@@ -9,7 +9,7 @@ import { Logo } from '@/components/Logo'
 import { cn } from '@/lib/utils'
 
 const publicLinks = [
-  { to: '/schedule', key: 'nav.schedule', show: true },
+  { to: '/schedule', key: 'nav.schedule', show: FEATURES.schedule },
   { to: '/trainers', key: 'nav.trainers', show: FEATURES.trainers },
   { to: '/services', key: 'nav.services', show: true },
   { to: '/gallery', key: 'nav.gallery', show: true },

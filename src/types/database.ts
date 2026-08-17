@@ -410,23 +410,30 @@ export interface Database {
       individual_requests: {
         Row: {
           id: string
+          service: string | null
           name: string | null
           phone: string
           comment: string | null
           status: 'new' | 'contacted' | 'done' | 'declined'
+          tg_chat_id: string | null
+          tg_message_id: number | null
           created_at: string
           updated_at: string
         }
         Insert: {
           id?: string
+          service?: string | null
           name?: string | null
           phone: string
           comment?: string | null
           status?: 'new' | 'contacted' | 'done' | 'declined'
+          tg_chat_id?: string | null
+          tg_message_id?: number | null
           created_at?: string
           updated_at?: string
         }
         Update: {
+          service?: string | null
           name?: string | null
           phone?: string
           comment?: string | null

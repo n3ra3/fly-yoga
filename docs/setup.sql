@@ -480,10 +480,11 @@ create policy "class_bk: admin all" on public.class_bookings
   for all using (public.get_my_role() = 'admin');
 
 -- ============================================================
--- 12. individual_requests — заявка на ИНДИВИДУАЛЬНОЕ занятие (обратный звонок)
+-- 12. individual_requests — заявка на занятие (обратный звонок)
 -- ============================================================
 create table if not exists public.individual_requests (
   id          uuid        primary key default gen_random_uuid(),
+  service     text,       -- что интересует: 'individual' | 'group'
   name        text,
   phone       text        not null,
   comment     text,       -- пожелания: время, количество человек и т.п.
@@ -491,6 +492,12 @@ create table if not exists public.individual_requests (
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now()
 );
+
+-- миграция существующей таблицы
+alter table public.individual_requests add column if not exists service text;
+-- связь с сообщением Telegram-бота (для двусторонней синхронизации статусов)
+alter table public.individual_requests add column if not exists tg_chat_id text;
+alter table public.individual_requests add column if not exists tg_message_id bigint;
 
 alter table public.individual_requests enable row level security;
 

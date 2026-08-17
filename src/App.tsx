@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { LotusBackground } from '@/components/LotusBackground'
 import { ScrollToTop } from '@/components/ScrollToTop'
+import { FEATURES } from '@/config/features'
 import { PublicLayout } from '@/layouts/PublicLayout'
 import { DashboardLayout } from '@/layouts/DashboardLayout'
 import { AdminLayout } from '@/layouts/AdminLayout'
@@ -23,6 +24,7 @@ import { BookingsPage } from '@/pages/BookingsPage'
 import { ProfilePage } from '@/pages/ProfilePage'
 import { AdminPage } from '@/pages/AdminPage'
 import { AdminTrainersPage } from '@/pages/admin/AdminTrainersPage'
+import { AdminRequestsPage } from '@/pages/admin/AdminRequestsPage'
 import { TrainerSchedulePage } from '@/pages/trainer/TrainerSchedulePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 
@@ -38,7 +40,10 @@ export function App() {
           <Routes>
             <Route element={<PublicLayout />}>
               <Route path="/" element={<HomePage />} />
-              <Route path="/schedule" element={<SchedulePage />} />
+              <Route
+                path="/schedule"
+                element={FEATURES.schedule ? <SchedulePage /> : <Navigate to="/" replace />}
+              />
               <Route path="/trainers" element={<TrainersPage />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/gallery" element={<GalleryPage />} />
@@ -50,8 +55,11 @@ export function App() {
             </Route>
 
             <Route element={<DashboardLayout />}>
-              <Route path="/dashboard" element={<Navigate to="/dashboard/bookings" replace />} />
-              <Route path="/dashboard/bookings" element={<BookingsPage />} />
+              <Route
+                path="/dashboard"
+                element={<Navigate to={FEATURES.schedule ? '/dashboard/bookings' : '/dashboard/profile'} replace />}
+              />
+              {FEATURES.schedule && <Route path="/dashboard/bookings" element={<BookingsPage />} />}
               <Route path="/dashboard/profile" element={<ProfilePage />} />
             </Route>
 
@@ -61,6 +69,7 @@ export function App() {
 
             <Route element={<AdminLayout />}>
               <Route path="/admin" element={<AdminPage />} />
+              <Route path="/admin/requests" element={<AdminRequestsPage />} />
               <Route path="/admin/trainers" element={<AdminTrainersPage />} />
             </Route>
 

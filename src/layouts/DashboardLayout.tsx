@@ -3,10 +3,13 @@ import { useTranslation } from 'react-i18next'
 import { CalendarDays, User } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { Navbar } from '@/components/Navbar'
+import { FEATURES } from '@/config/features'
 import { cn } from '@/lib/utils'
 
 const NAV_ITEMS = [
-  { to: '/dashboard/bookings', labelKey: 'dashboard.bookings.title', Icon: CalendarDays },
+  ...(FEATURES.schedule
+    ? [{ to: '/dashboard/bookings', labelKey: 'dashboard.bookings.title', Icon: CalendarDays }]
+    : []),
   { to: '/dashboard/profile', labelKey: 'dashboard.profile.title', Icon: User },
 ] as const
 

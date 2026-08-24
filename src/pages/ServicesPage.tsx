@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ArrowRight, Check, Users, Maximize, CalendarDays, Phone, Loader2, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, Check, Users, Maximize, CalendarDays, Phone, Loader2, CheckCircle2, LogIn } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/contexts/AuthContext'
 import { cn } from '@/lib/utils'
 import { Photo } from '@/components/Photo'
 import { PhotoStrip } from '@/components/PhotoStrip'
@@ -187,13 +188,24 @@ type ServiceKind = (typeof SERVICES)[number]
 
 function CallbackForm({ initial }: { initial?: string | null }) {
   const { t } = useTranslation()
+  const { user, profile } = useAuth()
   const [service, setService] = useState<ServiceKind>(
     (SERVICES as readonly string[]).includes(initial ?? '') ? (initial as ServiceKind) : 'trial',
   )
+  const fullName = profile ? `${profile.first_name} ${profile.last_name}`.trim() : ''
   const [form, setForm] = useState({ name: '', phone: '', comment: '' })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [done, setDone] = useState(false)
+
+  // подставляем имя/телефон из профиля
+  useEffect(() => {
+    setForm((f) => ({
+      ...f,
+      name: f.name || fullName,
+      phone: f.phone || profile?.phone || '',
+    }))
+  }, [fullName, profile?.phone])
 
   function change(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
@@ -201,17 +213,46 @@ function CallbackForm({ initial }: { initial?: string | null }) {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
+    if (!user) return
     setError(null)
     setLoading(true)
     const { error } = await supabase.from('individual_requests').insert({
+      user_id: user.id,
       service,
-      name: form.name || null,
+      name: form.name || fullName || null,
       phone: form.phone,
       comment: form.comment || null,
     })
     setLoading(false)
     if (error) setError(t('services.individual.form.error'))
     else setDone(true)
+  }
+
+  // не вошёл — предлагаем зарегистрироваться/войти
+  if (!user) {
+    return (
+      <div className="flex h-fit flex-col items-center gap-4 rounded-3xl border border-border bg-secondary/30 px-8 py-12 text-center">
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <LogIn size={26} />
+        </div>
+        <h3 className="font-display text-xl tracking-tight">{t('services.book.loginTitle')}</h3>
+        <p className="max-w-xs text-sm text-muted-foreground">{t('services.book.loginText')}</p>
+        <div className="mt-1 flex flex-col gap-2 self-stretch">
+          <Link
+            to="/register"
+            className="rounded-full bg-primary py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            {t('services.book.registerCta')}
+          </Link>
+          <Link
+            to="/login"
+            className="rounded-full border border-border py-3 text-sm font-medium text-foreground/70 transition-colors hover:border-primary/40 hover:text-primary"
+          >
+            {t('services.book.loginCta')}
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   if (done) {

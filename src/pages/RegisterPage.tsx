@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Eye, EyeOff, MailCheck, Loader2, ArrowLeft } from 'lucide-react'
+import { Eye, EyeOff, MailCheck, Loader2, ArrowLeft, X } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { Logo } from '@/components/Logo'
 import { CodeInput } from '@/components/CodeInput'
+import { RULES_VERSION, rulesTitle, rulesSections } from '@/data/rules'
 
 export function RegisterPage() {
   const { t } = useTranslation()
@@ -21,6 +22,8 @@ export function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [exists, setExists] = useState(false)
+  const [agreed, setAgreed] = useState(false)
+  const [showRules, setShowRules] = useState(false)
   const [codeStep, setCodeStep] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -41,6 +44,7 @@ export function RegisterPage() {
       firstName: form.firstName,
       lastName: form.lastName,
       phone: form.phone || undefined,
+      termsVersion: RULES_VERSION,
     })
     setLoading(false)
 
@@ -176,9 +180,30 @@ export function RegisterPage() {
               </p>
             )}
 
+            {/* Согласие с правилами — обязательно */}
+            <label className="flex items-start gap-2.5 text-sm text-foreground/80">
+              <input
+                type="checkbox"
+                required
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-0.5 h-4 w-4 shrink-0 accent-[hsl(var(--primary))]"
+              />
+              <span>
+                {t('auth.register.agreePrefix')}{' '}
+                <button
+                  type="button"
+                  onClick={() => setShowRules(true)}
+                  className="font-medium text-primary hover:underline"
+                >
+                  {t('auth.register.rulesLink')}
+                </button>
+              </span>
+            </label>
+
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !agreed}
               className="mt-1 rounded-full bg-primary py-3 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-md disabled:opacity-50"
             >
               {loading ? t('common.loading') : t('auth.register.submit')}
@@ -193,6 +218,44 @@ export function RegisterPage() {
           </Link>
         </p>
       </div>
+
+      {showRules && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4"
+          onClick={() => setShowRules(false)}
+        >
+          <div
+            className="flex max-h-[85vh] w-full max-w-lg flex-col rounded-2xl border border-border bg-card shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-border px-6 py-4">
+              <h3 className="font-display text-xl tracking-tight">{rulesTitle}</h3>
+              <button onClick={() => setShowRules(false)} className="text-muted-foreground hover:text-foreground">
+                <X size={18} />
+              </button>
+            </div>
+            <div className="flex-1 space-y-4 overflow-y-auto px-6 py-5">
+              {rulesSections.map((s, i) => (
+                <div key={i}>
+                  <p className="font-medium">{s.heading}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
+                </div>
+              ))}
+            </div>
+            <div className="border-t border-border px-6 py-4">
+              <button
+                onClick={() => {
+                  setAgreed(true)
+                  setShowRules(false)
+                }}
+                className="w-full rounded-full bg-primary py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                {t('auth.register.acceptRules')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

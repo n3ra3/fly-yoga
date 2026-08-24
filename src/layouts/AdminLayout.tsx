@@ -13,6 +13,7 @@ export function AdminLayout() {
   const links = [
     { to: '/admin', label: t('admin.dashboard.nav'), end: true },
     { to: '/admin/requests', label: t('admin.requests') },
+    { to: '/admin/clients', label: t('admin.clients') },
     { to: '/admin/trainers', label: t('admin.trainers') },
   ]
 

@@ -241,6 +241,10 @@
       "title": "Rezervă o ședință",
       "description": "Lasă o cerere — administratorul te va suna, va alege o oră convenabilă și va răspunde la întrebări. Alege ce te interesează.",
       "chooseService": "Ce te interesează?",
+      "loginTitle": "Autentifică-te mai întâi",
+      "loginText": "Pentru a lăsa o cerere, înregistrează-te sau autentifică-te.",
+      "registerCta": "Înregistrează-te",
+      "loginCta": "Conectare",
       "service": {
         "trial": "De probă",
         "group": "În grup",
@@ -367,7 +371,10 @@
       "success": "Am trimis un link de confirmare la adresa ta de email.",
       "error": "Eroare la înregistrare. Încercați din nou.",
       "exists": "Un cont cu acest email există deja.",
-      "goToLogin": "Mergi la conectare"
+      "goToLogin": "Mergi la conectare",
+      "agreePrefix": "Accept",
+      "rulesLink": "regulile studioului",
+      "acceptRules": "Accept regulile"
     },
     "code": {
       "title": "Confirmă emailul",
@@ -444,17 +451,13 @@
     },
     "clientsPage": {
       "title": "Clienți",
-      "subtitle": "Aprobă clienții noi — abia atunci vor putea rezerva ședințe.",
-      "pending": "În așteptare",
-      "all": "Toți",
-      "search": "Caută după nume sau telefon",
-      "name": "Nume",
-      "status": "Status",
-      "approved": "Aprobat",
-      "waiting": "În așteptare",
-      "approve": "Aprobă",
-      "revoke": "Retrage",
-      "noPending": "Niciun client în așteptarea aprobării",
+      "subtitle": "Găsește un client și atribuie un abonament sau o vizită unică.",
+      "search": "Caută după nume, telefon sau id",
+      "noSub": "Fără abonament",
+      "current": "Curent",
+      "until": "până la",
+      "left": "rămase",
+      "assign": "Atribuie un abonament:",
       "noResults": "Nimic găsit"
     },
     "schedule": "Orar",

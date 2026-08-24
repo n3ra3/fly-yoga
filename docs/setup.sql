@@ -77,6 +77,11 @@ begin
     coalesce(new.raw_user_meta_data->>'last_name', ''),
     new.raw_user_meta_data->>'phone'
   );
+  -- согласие с правилами (передаётся при регистрации)
+  if new.raw_user_meta_data ? 'terms_version' then
+    insert into public.consents (user_id, version)
+    values (new.id, new.raw_user_meta_data->>'terms_version');
+  end if;
   return new;
 end;
 $$;
@@ -498,16 +503,45 @@ alter table public.individual_requests add column if not exists service text;
 -- связь с сообщением Telegram-бота (для двусторонней синхронизации статусов)
 alter table public.individual_requests add column if not exists tg_chat_id text;
 alter table public.individual_requests add column if not exists tg_message_id bigint;
+-- заявку теперь оставляет зарегистрированный клиент → привязка к аккаунту
+alter table public.individual_requests add column if not exists user_id uuid references public.profiles(id) on delete set null;
 
 alter table public.individual_requests enable row level security;
 
--- любой может оставить заявку (без входа)
+-- заявку может оставить только вошедший пользователь (о своей персоне)
 drop policy if exists "ind_req: public insert" on public.individual_requests;
-create policy "ind_req: public insert" on public.individual_requests
-  for insert with check (true);
+drop policy if exists "ind_req: user insert" on public.individual_requests;
+create policy "ind_req: user insert" on public.individual_requests
+  for insert with check (auth.uid() = user_id);
+
+drop policy if exists "ind_req: user read own" on public.individual_requests;
+create policy "ind_req: user read own" on public.individual_requests
+  for select using (auth.uid() = user_id);
 
 drop policy if exists "ind_req: admin all" on public.individual_requests;
 create policy "ind_req: admin all" on public.individual_requests
+  for all using (public.get_my_role() = 'admin');
+
+-- ============================================================
+-- 13. consents — согласие с правилами при регистрации
+-- ============================================================
+create table if not exists public.consents (
+  id          uuid        primary key default gen_random_uuid(),
+  user_id     uuid        not null references public.profiles(id) on delete cascade,
+  version     text        not null,
+  accepted_at timestamptz not null default now()
+);
+
+create index if not exists consents_user_id_idx on public.consents(user_id);
+
+alter table public.consents enable row level security;
+
+drop policy if exists "consents: user read own" on public.consents;
+create policy "consents: user read own" on public.consents
+  for select using (auth.uid() = user_id);
+
+drop policy if exists "consents: admin all" on public.consents;
+create policy "consents: admin all" on public.consents
   for all using (public.get_my_role() = 'admin');
 
 -- ============================================================
@@ -538,14 +572,28 @@ select * from (values
 ) as v(name_ru, name_ro, name_en, duration_min, level, color)
 where not exists (select 1 from public.classes);
 
-insert into public.subscription_plans (name_ru, name_ro, name_en, price_mdl, classes_count, duration_days, sort_order)
-select * from (values
-  ('Разовое занятие', 'O lecție',     'Single class',  150.00, 1,    1,   0),
-  ('4 занятия',       '4 lecții',     '4 classes',     500.00, 4,    30,  1),
-  ('8 занятий',       '8 lecții',     '8 classes',     900.00, 8,    30,  2),
-  ('Безлимит',        'Nelimitat',    'Unlimited',    1400.00, null, 30,  3)
-) as v(name_ru, name_ro, name_en, price_mdl, classes_count, duration_days, sort_order)
-where not exists (select 1 from public.subscription_plans);
+-- Абонементы студии. Стабильный код позволяет обновлять цены без дублей.
+alter table public.subscription_plans add column if not exists code text;
+-- убираем старые сид-планы без кода (только если на них ещё нет подписок)
+delete from public.subscription_plans
+  where code is null and id not in (select plan_id from public.subscriptions);
+create unique index if not exists subscription_plans_code_key on public.subscription_plans(code);
+
+insert into public.subscription_plans
+  (code, name_ru, name_ro, name_en, price_mdl, classes_count, duration_days, sort_order)
+values
+  ('trial',   'Пробное занятие',        'Ședință de probă',        'Trial class',            150.00, 1,    14, 0),
+  ('single',  'Разовое в группе',       'O ședință în grup',       'Single group class',     200.00, 1,    14, 1),
+  ('month4',  'Абонемент 4 (месяц)',    'Abonament 4 (lună)',      '4 classes (month)',      700.00, 4,    30, 2),
+  ('month8',  'Абонемент 8 (месяц)',    'Abonament 8 (lună)',      '8 classes (month)',     1200.00, 8,    30, 3),
+  ('month12', 'Абонемент 12 (месяц)',   'Abonament 12 (lună)',     '12 classes (month)',    1500.00, 12,   30, 4),
+  ('indiv1',  'Индивидуальное (1 чел.)','Individual (1 pers.)',    'Individual (1 person)',  500.00, 1,    14, 5),
+  ('indiv2',  'Индивидуальное (2 чел.)','Individual (2 pers.)',    'Individual (2 persons)', 700.00, 1,    14, 6)
+on conflict (code) do update set
+  name_ru = excluded.name_ru, name_ro = excluded.name_ro, name_en = excluded.name_en,
+  price_mdl = excluded.price_mdl, classes_count = excluded.classes_count,
+  duration_days = excluded.duration_days, sort_order = excluded.sort_order,
+  is_active = true, updated_at = now();
 
 -- ============================================================
 -- ВАЖНО: сделай себя админом. Зарегистрируйся на сайте, потом запусти:

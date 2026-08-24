@@ -241,6 +241,10 @@
       "title": "Book a session",
       "description": "Leave a request — the administrator will call you back, pick a convenient time and answer your questions. Choose what you're interested in.",
       "chooseService": "What are you interested in?",
+      "loginTitle": "Please log in first",
+      "loginText": "To leave a request, please register or log in.",
+      "registerCta": "Sign up",
+      "loginCta": "Log in",
       "service": {
         "trial": "Trial",
         "group": "Group",
@@ -367,7 +371,10 @@
       "success": "We sent a confirmation link to your email address.",
       "error": "Registration failed. Please try again.",
       "exists": "An account with this email already exists.",
-      "goToLogin": "Go to login"
+      "goToLogin": "Go to login",
+      "agreePrefix": "I accept the",
+      "rulesLink": "studio rules",
+      "acceptRules": "I accept the rules"
     },
     "code": {
       "title": "Confirm your email",
@@ -444,17 +451,13 @@
     },
     "clientsPage": {
       "title": "Clients",
-      "subtitle": "Approve new clients — only then can they book classes.",
-      "pending": "Pending",
-      "all": "All",
-      "search": "Search by name or phone",
-      "name": "Name",
-      "status": "Status",
-      "approved": "Approved",
-      "waiting": "Waiting",
-      "approve": "Approve",
-      "revoke": "Revoke",
-      "noPending": "No clients waiting for approval",
+      "subtitle": "Find a client and assign a subscription or a single visit.",
+      "search": "Search by name, phone or id",
+      "noSub": "No subscription",
+      "current": "Current",
+      "until": "until",
+      "left": "left",
+      "assign": "Assign a subscription:",
       "noResults": "Nothing found"
     },
     "schedule": "Schedule",

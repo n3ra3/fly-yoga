@@ -25,6 +25,7 @@ import { ProfilePage } from '@/pages/ProfilePage'
 import { AdminPage } from '@/pages/AdminPage'
 import { AdminTrainersPage } from '@/pages/admin/AdminTrainersPage'
 import { AdminRequestsPage } from '@/pages/admin/AdminRequestsPage'
+import { AdminClientsPage } from '@/pages/admin/AdminClientsPage'
 import { TrainerSchedulePage } from '@/pages/trainer/TrainerSchedulePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 
@@ -70,6 +71,7 @@ export function App() {
             <Route element={<AdminLayout />}>
               <Route path="/admin" element={<AdminPage />} />
               <Route path="/admin/requests" element={<AdminRequestsPage />} />
+              <Route path="/admin/clients" element={<AdminClientsPage />} />
               <Route path="/admin/trainers" element={<AdminTrainersPage />} />
             </Route>
 

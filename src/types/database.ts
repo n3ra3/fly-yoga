@@ -195,6 +195,7 @@ export interface Database {
       subscription_plans: {
         Row: {
           id: string
+          code: string | null
           name_ru: string
           name_ro: string
           name_en: string
@@ -211,6 +212,7 @@ export interface Database {
         }
         Insert: {
           id?: string
+          code?: string | null
           name_ru: string
           name_ro: string
           name_en: string
@@ -410,6 +412,7 @@ export interface Database {
       individual_requests: {
         Row: {
           id: string
+          user_id: string | null
           service: string | null
           name: string | null
           phone: string
@@ -422,6 +425,7 @@ export interface Database {
         }
         Insert: {
           id?: string
+          user_id?: string | null
           service?: string | null
           name?: string | null
           phone: string
@@ -439,6 +443,23 @@ export interface Database {
           comment?: string | null
           status?: 'new' | 'contacted' | 'done' | 'declined'
           updated_at?: string
+        }
+      }
+      consents: {
+        Row: {
+          id: string
+          user_id: string
+          version: string
+          accepted_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          version: string
+          accepted_at?: string
+        }
+        Update: {
+          version?: string
         }
       }
     }

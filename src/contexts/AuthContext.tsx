@@ -30,6 +30,8 @@ interface SignUpParams {
   firstName: string
   lastName: string
   phone?: string
+  /** версия принятых правил (записывается в согласия) */
+  termsVersion?: string
 }
 
 interface SignUpResult {
@@ -98,12 +100,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: error?.message ?? null }
   }
 
-  async function signUp({ email, password, firstName, lastName, phone }: SignUpParams): Promise<SignUpResult> {
+  async function signUp({ email, password, firstName, lastName, phone, termsVersion }: SignUpParams): Promise<SignUpResult> {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: { first_name: firstName, last_name: lastName, phone: phone ?? null },
+        data: {
+          first_name: firstName,
+          last_name: lastName,
+          phone: phone ?? null,
+          ...(termsVersion ? { terms_version: termsVersion } : {}),
+        },
       },
     })
 

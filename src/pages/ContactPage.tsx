@@ -4,14 +4,14 @@ import { MapPin, Phone, Mail, Clock, Instagram, Facebook, ExternalLink } from 'l
 const INSTAGRAM_URL = 'https://www.instagram.com/fly_yoga_studio/'
 const FACEBOOK_URL  = 'https://www.facebook.com/flyogastudio'
 
-// Strada 31 August 1989, 110, Chișinău
-const LAT = 47.0300758945097
-const LON = 28.818675748781875
+// Ищем по названию заведения (а не по координатам), чтобы метка встала
+// прямо на карточку «Fly Yoga Studio» в Google, а не рядом.
+const MAP_QUERY = 'Fly Yoga Studio, Strada 31 August 1989 110, Chișinău'
 
 // Google Maps embed — привычный, плавный зум/перетаскивание, без API-ключа.
-const MAP_URL = `https://www.google.com/maps?q=${LAT},${LON}&z=17&hl=ru&output=embed`
+const MAP_URL = `https://www.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&z=17&hl=ru&output=embed`
 
-const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${LAT},${LON}`
+const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAP_QUERY)}`
 
 export function ContactPage() {
   const { t } = useTranslation()

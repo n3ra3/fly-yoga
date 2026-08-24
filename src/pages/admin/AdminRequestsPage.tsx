@@ -31,6 +31,16 @@ export function AdminRequestsPage() {
 
   useEffect(() => {
     load()
+    // тихо обновляем список (без спиннера) — новые заявки появляются сами
+    const id = setInterval(load, 12000)
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') load()
+    }
+    document.addEventListener('visibilitychange', onVisible)
+    return () => {
+      clearInterval(id)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
   }, [load])
 
   async function setStatus(id: string, status: IndividualRequest['status']) {

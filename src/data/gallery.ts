@@ -1,7 +1,7 @@
 /**
  * Галерея студии. Фото кладём в public/images/gallery/
- * по схеме: <folder>-1.jpg … <folder>-6.jpg
- * Например: hall-big-1.jpg, kitchen-3.jpg
+ * по схеме: <folder>-1.webp … <folder>-6.webp
+ * Например: hall-big-1.webp, kitchen-3.webp
  * Если файла нет — на его месте показывается аккуратный плейсхолдер.
  */
 
@@ -23,5 +23,5 @@ export const GALLERY_CATEGORIES: GalleryCategory[] = [
 ]
 
 export function photosOf(category: GalleryCategory): string[] {
-  return Array.from({ length: category.count }, (_, i) => `/images/gallery/${category.folder}-${i + 1}.jpg`)
+  return Array.from({ length: category.count }, (_, i) => `/images/gallery/${category.folder}-${i + 1}.webp`)
 }

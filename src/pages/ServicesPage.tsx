@@ -10,17 +10,17 @@ import { PhotoStrip } from '@/components/PhotoStrip'
 import { FEATURES } from '@/config/features'
 
 const GALLERY = [
-  '/images/gallery-1.jpg',
-  '/images/gallery-2.jpg',
-  '/images/gallery-3.jpg',
-  '/images/gallery-4.jpg',
-  '/images/gallery-5.jpg',
-  '/images/gallery-6.jpg',
+  '/images/gallery-1.webp',
+  '/images/gallery-2.webp',
+  '/images/gallery-3.webp',
+  '/images/gallery-4.webp',
+  '/images/gallery-5.webp',
+  '/images/gallery-6.webp',
 ]
 
 const HALLS = [
-  { key: 'small', img: '/images/hall-small.jpg' },
-  { key: 'big', img: '/images/hall-big.jpg' },
+  { key: 'small', img: '/images/hall-small.webp' },
+  { key: 'big', img: '/images/hall-big.webp' },
 ] as const
 
 export function ServicesPage() {

@@ -34,9 +34,9 @@ const FEATURES = [
 ] as const
 
 const DIRECTIONS: { key: ScheduleCategory; img: string; Icon: typeof Sun }[] = [
-  { key: 'morning', img: '/images/morning.jpg', Icon: Sun },
-  { key: 'evening', img: '/images/evening.jpg', Icon: Moon },
-  { key: 'weekend', img: '/images/weekend.jpg', Icon: Leaf },
+  { key: 'morning', img: '/images/morning.webp', Icon: Sun },
+  { key: 'evening', img: '/images/evening.webp', Icon: Moon },
+  { key: 'weekend', img: '/images/weekend.webp', Icon: Leaf },
 ]
 
 const KIND_SHORT: Record<GroupKind, string> = {
@@ -104,7 +104,7 @@ export function HomePage() {
           </div>
 
           <Photo
-            src="/images/hero.jpg"
+            src="/images/hero.webp"
             alt={t('home.hero.line1')}
             className="aspect-[4/5] rounded-3xl lg:aspect-[3/4]"
           />
@@ -198,7 +198,7 @@ export function HomePage() {
         <div className="container-yoga grid items-center gap-8 lg:grid-cols-[minmax(0,400px)_1fr]">
           {/* Фото-постер вертикальный (9:16) — показываем целиком, без обрезки */}
           <Photo
-            src="/images/studio.jpg"
+            src="/images/studio.webp"
             alt={t('home.trial.title')}
             className="mx-auto aspect-[9/16] w-full max-w-[340px] rounded-3xl lg:max-w-none"
           />
@@ -273,7 +273,7 @@ export function HomePage() {
       <section className="pb-16 md:pb-24">
         <div className="container-yoga">
           <div className="relative overflow-hidden rounded-3xl">
-            <Photo src="/images/cta.jpg" alt="" className="absolute inset-0 h-full w-full" />
+            <Photo src="/images/cta.webp" alt="" className="absolute inset-0 h-full w-full" />
             <div className="absolute inset-0 bg-primary/80" />
             <div className="relative px-8 py-16 text-center text-primary-foreground sm:py-20">
               <h2 className="font-display text-4xl leading-tight tracking-tight sm:text-5xl">

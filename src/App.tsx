@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 
 import { AuthProvider } from '@/contexts/AuthContext'
 import { LotusBackground } from '@/components/LotusBackground'
+import { FlyLoader } from '@/components/FlyLoader'
 import { ScrollToTop } from '@/components/ScrollToTop'
 import { FEATURES } from '@/config/features'
 import { PublicLayout } from '@/layouts/PublicLayout'
@@ -33,6 +34,8 @@ export function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        {/* Стартовый экран: лотос раскрывается и «улетает» */}
+        <FlyLoader />
         {/* Прокрутка наверх при переходе между страницами */}
         <ScrollToTop />
         {/* Декоративный лотос на фоне — виден на всех страницах */}

@@ -1,4 +1,5 @@
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useLocation } from 'react-router-dom'
 
 // Лепестки лотоса (тот же путь, что в дизайн-макете).
 const FLY_PATHS = [
@@ -11,29 +12,46 @@ const FLY_PATHS = [
   'M515 421 Q620.6 441.4 726 348 Q560.4 267.6 515 421 Z',
 ]
 
+// Тайминги: первый заход — полный, «дышащий»; переходы — короткие.
+const INITIAL = { show: 1150, fly: 600 }
+const ROUTE = { show: 480, fly: 340 }
+
 /**
- * Стартовый экран загрузки Fly Yoga.
- * Лотос «раскрывается на вдохе», дышит, затем «улетает» вверх, открывая сайт.
- * Показывается один раз при первом заходе.
+ * Экран загрузки Fly Yoga.
+ * Лотос «раскрывается на вдохе» и «улетает» вверх, открывая контент.
+ * Полный вариант — при первом заходе; быстрый — при переходах между страницами
+ * (прячет рывок смены страницы и прокрутки наверх).
  */
 export function FlyLoader() {
-  const [mounted, setMounted] = useState(true)
+  const { pathname } = useLocation()
+  const isFirst = useRef(true)
+  const [visible, setVisible] = useState(true)
   const [exiting, setExiting] = useState(false)
+  const [quick, setQuick] = useState(false)
+  const [runId, setRunId] = useState(0)
 
   useEffect(() => {
-    // Даём лотосу полностью распуститься и вдохнуть, затем — полёт вверх.
-    const hide = window.setTimeout(() => setExiting(true), 1150)
-    const remove = window.setTimeout(() => setMounted(false), 1750)
+    const first = isFirst.current
+    isFirst.current = false
+    const timing = first ? INITIAL : ROUTE
+
+    setQuick(!first)
+    setExiting(false)
+    setVisible(true)
+    setRunId((n) => n + 1) // перезапустить анимацию распускания
+
+    const hide = window.setTimeout(() => setExiting(true), timing.show)
+    const remove = window.setTimeout(() => setVisible(false), timing.show + timing.fly)
     return () => {
       window.clearTimeout(hide)
       window.clearTimeout(remove)
     }
-  }, [])
+  }, [pathname])
 
-  if (!mounted) return null
+  if (!visible) return null
 
   return (
-    <div className={`fly-overlay${exiting ? ' is-exiting' : ''}`}>
+    <div key={runId} className={`fly-overlay${exiting ? ' is-exiting' : ''}${quick ? ' fly-quick' : ''}`}>
       <svg className="fly-mark" viewBox="290 176 450 300" xmlns="http://www.w3.org/2000/svg" aria-label="Загрузка">
         <g className="fly-breathe">
           <ellipse className="fly-base" cx="515" cy="444" rx="82" ry="8" />

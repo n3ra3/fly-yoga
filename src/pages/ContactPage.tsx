@@ -8,13 +8,10 @@ const FACEBOOK_URL  = 'https://www.facebook.com/flyogastudio'
 const LAT = 47.0300758945097
 const LON = 28.818675748781875
 
-const MAP_URL =
-  'https://www.openstreetmap.org/export/embed.html' +
-  `?bbox=${LON - 0.012}%2C${LAT - 0.007}%2C${LON + 0.012}%2C${LAT + 0.007}` +
-  '&layer=mapnik' +
-  `&marker=${LAT}%2C${LON}`
+// Google Maps embed — привычный, плавный зум/перетаскивание, без API-ключа.
+const MAP_URL = `https://www.google.com/maps?q=${LAT},${LON}&z=17&hl=ru&output=embed`
 
-const MAP_LINK = `https://www.openstreetmap.org/?mlat=${LAT}&mlon=${LON}#map=18/${LAT}/${LON}`
+const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${LAT},${LON}`
 
 export function ContactPage() {
   const { t } = useTranslation()

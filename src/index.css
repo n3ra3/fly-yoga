@@ -128,9 +128,23 @@
     transform: scale(1.028);
   }
 }
+/* быстрый режим — при переходах между страницами */
+.fly-quick .fly-petal {
+  animation-duration: 0.34s;
+  animation-delay: calc(var(--i) * 0.022s);
+}
+.fly-quick .fly-base {
+  animation-duration: 0.26s;
+}
+.fly-quick .fly-mark .fly-breathe {
+  animation: none;
+}
 /* выход — «полёт»: подъём вверх + растворение */
 .fly-overlay.is-exiting {
   animation: fly-away 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.fly-quick.is-exiting {
+  animation-duration: 0.34s;
 }
 @keyframes fly-away {
   to {

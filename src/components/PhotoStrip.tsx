@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Photo } from '@/components/Photo'
+import { Lightbox } from '@/components/Lightbox'
 import { cn } from '@/lib/utils'
 
 const AUTOPLAY_MS = 4500
@@ -27,6 +28,7 @@ export function PhotoStrip({ images, hint }: { images: string[]; hint?: string }
   const perView = useItemsPerView()
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
+  const [zoom, setZoom] = useState<number | null>(null) // индекс открытого фото
 
   const maxIndex = Math.max(0, images.length - perView)
   const canSlide = images.length > perView
@@ -45,8 +47,13 @@ export function PhotoStrip({ images, hint }: { images: string[]; hint?: string }
   }, [canSlide, paused, next])
 
   const touchX = useRef<number | null>(null)
+  const swiped = useRef(false)
   function onTouchStart(e: React.TouchEvent) {
     touchX.current = e.touches[0].clientX
+    swiped.current = false
+  }
+  function onTouchMove(e: React.TouchEvent) {
+    if (touchX.current !== null && Math.abs(e.touches[0].clientX - touchX.current) > 10) swiped.current = true
   }
   function onTouchEnd(e: React.TouchEvent) {
     if (touchX.current === null) return
@@ -59,7 +66,7 @@ export function PhotoStrip({ images, hint }: { images: string[]; hint?: string }
     <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
       {hint && <p className="mb-4 text-sm font-medium text-muted-foreground">{hint}</p>}
 
-      <div className="overflow-hidden" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+      <div className="overflow-hidden" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
         <div
           className="flex transition-transform duration-500 ease-out"
           style={{ transform: `translateX(-${index * (100 / perView)}%)` }}
@@ -70,7 +77,21 @@ export function PhotoStrip({ images, hint }: { images: string[]; hint?: string }
               className="shrink-0 px-2.5 first:pl-0 last:pr-0"
               style={{ flexBasis: `${100 / perView}%`, maxWidth: `${100 / perView}%` }}
             >
-              <Photo src={src} alt={`Fly Yoga ${i + 1}`} className="aspect-[3/4] w-full rounded-2xl" />
+              <button
+                type="button"
+                onClick={() => {
+                  if (!swiped.current) setZoom(i)
+                }}
+                className="block w-full cursor-zoom-in"
+                aria-label={`Открыть фото ${i + 1}`}
+              >
+                <Photo
+                  src={src}
+                  alt={`Fly Yoga ${i + 1}`}
+                  className="aspect-[3/4] w-full rounded-2xl"
+                  imgClassName="transition-transform duration-300 hover:scale-[1.04]"
+                />
+              </button>
             </div>
           ))}
         </div>
@@ -108,6 +129,10 @@ export function PhotoStrip({ images, hint }: { images: string[]; hint?: string }
             <ChevronRight size={16} />
           </button>
         </div>
+      )}
+
+      {zoom !== null && (
+        <Lightbox images={images} index={zoom} onClose={() => setZoom(null)} onIndex={setZoom} />
       )}
     </div>
   )

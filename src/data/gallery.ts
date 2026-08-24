@@ -20,7 +20,7 @@ export interface GalleryCategory {
 export const GALLERY_CATEGORIES: GalleryCategory[] = [
   { key: 'hallBig', folder: 'hall-big', count: 4 },
   { key: 'hallSmall', folder: 'hall-small', count: 3 },
-  { key: 'changing', folder: 'changing', count: 3 },
+  { key: 'changing', folder: 'changing', count: 4 },
 ]
 
 export function photosOf(category: GalleryCategory): string[] {

@@ -14,12 +14,13 @@ export interface GalleryCategory {
   count: number
 }
 
+// count = сколько реальных фото лежит в public/images/gallery/ для категории.
+// Ставим ровно столько, сколько есть, — тогда в карусели нет пустых карточек.
+// Добавил фото? Обнови count (и прогони `npm run optimize:images`).
 export const GALLERY_CATEGORIES: GalleryCategory[] = [
-  { key: 'hallBig', folder: 'hall-big', count: 6 },
-  { key: 'hallSmall', folder: 'hall-small', count: 6 },
-  { key: 'kitchen', folder: 'kitchen', count: 6 },
-  { key: 'changing', folder: 'changing', count: 6 },
-  { key: 'toilet', folder: 'toilet', count: 6 },
+  { key: 'hallBig', folder: 'hall-big', count: 4 },
+  { key: 'hallSmall', folder: 'hall-small', count: 3 },
+  { key: 'changing', folder: 'changing', count: 3 },
 ]
 
 export function photosOf(category: GalleryCategory): string[] {

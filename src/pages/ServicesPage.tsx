@@ -296,8 +296,8 @@ function CallbackForm({ initial }: { initial?: string | null }) {
         </div>
       </div>
 
-      <Field label={`${t('services.individual.form.name')} (${t('common.optional')})`}>
-        <input name="name" value={form.name} onChange={change} className="input-base" />
+      <Field label={t('services.individual.form.name')}>
+        <input name="name" required value={form.name} onChange={change} className="input-base" />
       </Field>
       <Field label={t('services.individual.form.phone')}>
         <input

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Hand } from 'lucide-react'
-import { PhotoStack } from '@/components/PhotoStack'
+import { PhotoStrip } from '@/components/PhotoStrip'
 import { GALLERY_CATEGORIES, photosOf } from '@/data/gallery'
 import { cn } from '@/lib/utils'
 
@@ -11,7 +10,6 @@ export function GalleryPage() {
 
   const category = GALLERY_CATEGORIES[active]
   const photos = photosOf(category)
-  const categoryName = t(`gallery.categories.${category.key}`)
 
   return (
     <div>
@@ -50,15 +48,11 @@ export function GalleryPage() {
             ))}
           </div>
 
-          {/* Стопка фотографий */}
+          {/* Фото-скроллер (тот же, что на «Услугах») */}
+          {/* key = категория, чтобы карусель сбрасывалась на 1-е фото при смене вкладки */}
           <div className="mt-12">
-            {/* key = категория, чтобы стопка сбрасывалась на 1-е фото при смене вкладки */}
-            <PhotoStack key={category.key} photos={photos} alt={categoryName} />
+            <PhotoStrip key={category.key} images={photos} />
           </div>
-
-          <p className="mt-6 flex items-center justify-center gap-1.5 text-sm text-muted-foreground">
-            <Hand size={14} /> {t('gallery.tapHint')}
-          </p>
         </div>
       </section>
     </div>
